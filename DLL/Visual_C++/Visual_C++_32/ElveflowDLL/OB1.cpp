@@ -6,7 +6,7 @@
 #include "error_check.h"
 #include "OB1.h"
 #include <windows.h>//for Sleep function and Get Time functions
-#include <Elveflow32.h>//modify the additional include directory
+#include "dll/Elveflow32.h"//modify the additional include directory
 
 
 using namespace std;

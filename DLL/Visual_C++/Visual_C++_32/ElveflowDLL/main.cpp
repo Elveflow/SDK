@@ -11,7 +11,7 @@
 #include "MUX.h"
 #include "BFS.h"
 #include "M_S_R_D.h"
-#include <Elveflow32.h>// modify the additional include directory
+#include "dll/Elveflow32.h" // modify the additional include directory
 
 
 //add Elveflow.dll in the build directory

@@ -53,6 +53,14 @@ typedef uint16_t  Z_MUX_DRI_Action;
 typedef uint16_t  Z_Trigger_type;
 #define Z_Trigger_type_Low 0
 #define Z_Trigger_type_High 1
+typedef uint16_t  Enum;
+#define Enum_UNDEFINED 0
+#define Enum__22NormallyClosed 1
+#define Enum__22NormallyOpened 2
+#define Enum__32Universal 3
+#define Enum__22NormallyClosedCustom 4
+#define Enum__22NormallyOpenedCustom 5
+#define Enum__32UniversalCustom 6
 
 /*!
  * Elveflow Library
@@ -77,7 +85,7 @@ int32_t __cdecl MUX_Initialization(char Device_Name[], int32_t *MUX_ID_out);
  * 
  */
 int32_t __cdecl MUX_Set_all_valves(int32_t MUX_ID_in, 
-	int32_t array_valve_in[], int32_t longueur);
+	int32_t array_valve_in[], int32_t len);
 /*!
  * Elveflow Library
  * MUX D-R-I Device
@@ -109,7 +117,7 @@ int32_t __cdecl OB1_Initialization(char Device_Name[],
  * Set default Calib in Calib cluster, len is the Calib_Array_out array length
  */
 int32_t __cdecl Elveflow_Calibration_Default(double Calib_Array_out[], 
-	int32_t longueur);
+	int32_t len);
 /*!
  * Elveflow Library
  * OB1-AF1 Device
@@ -120,7 +128,7 @@ int32_t __cdecl Elveflow_Calibration_Default(double Calib_Array_out[],
  * or not a path. The function indicate if the file was found.
  */
 int32_t __cdecl Elveflow_Calibration_Load(char Path[], 
-	double Calib_Array_out[], int32_t longueur);
+	double Calib_Array_out[], int32_t len);
 /*!
  * Elveflow Library
  * OB1-AF1 Device
@@ -130,7 +138,7 @@ int32_t __cdecl Elveflow_Calibration_Load(char Path[],
  * path if Path is not valid, empty or not a path.
  */
 int32_t __cdecl Elveflow_Calibration_Save(char Path[], 
-	double Calib_Array_in[], int32_t longueur);
+	double Calib_Array_in[], int32_t len);
 /*!
  * Elveflow Library
  * OB1 Device
@@ -141,7 +149,7 @@ int32_t __cdecl Elveflow_Calibration_Save(char Path[],
  * Len correspond to the Calib_array_out length.
  */
 int32_t __cdecl OB1_Calib(int32_t OB1_ID_in, double Calib_array_out[], 
-	int32_t longueur);
+	int32_t len);
 /*!
  * Elveflow Library
  * OB1 Device
@@ -390,7 +398,7 @@ int32_t __cdecl Elveflow_EXAMPLE_PID(int32_t PID_ID_in, double currentValue,
  * 
  */
 int32_t __cdecl MUX_Wire_Set_all_valves(int32_t MUX_ID_in, 
-	int32_t array_valve_in[], int32_t longueur);
+	int32_t array_valve_in[], int32_t len);
 /*!
  * Elveflow Library
  * OB1 Device
@@ -514,7 +522,7 @@ int32_t __cdecl M_S_R_D_Destructor(int32_t M_S_R_D_ID);
  * valve for a session.
  */
 int32_t __cdecl MUX_DRI_Send_Command(int32_t MUX_DRI_ID_in, 
-	Z_MUX_DRI_Action Action, char Answer[], int32_t longueur);
+	Z_MUX_DRI_Action Action, char Answer[], int32_t len);
 /*!
  * Elveflow Library
  * MSRD Device
@@ -533,7 +541,7 @@ int32_t __cdecl M_S_R_D_Set_Filt(int32_t M_S_R_D_ID, int32_t Channel_1_to_4,
  * (get_remote_data, set_remote_target, remote_triggers) are recommended.
  */
 int32_t __cdecl OB1_Start_Remote_Measurement(int32_t OB1_ID, 
-	double Calib_array_in[], int32_t longueur);
+	double Calib_array_in[], int32_t len);
 /*!
  * Elveflow Library
  * OB1 Device
@@ -705,6 +713,30 @@ int32_t __cdecl M_S_R_D_Get_Trig(int32_t M_S_R_D_ID,
  */
 int32_t __cdecl M_S_R_D_Set_Trig(int32_t M_S_R_D_ID, 
 	Z_Trigger_type SetTriggerOutput);
+/*!
+ * Elveflow Library
+ * Mux Device
+ * 
+ * Get valve type plugged into your MUX Wire
+ * 
+ * 
+ */
+int32_t __cdecl MUX_Get_valves_Type(int32_t MUX_ID_in, int32_t Types_array[], 
+	int32_t len);
+/*!
+ * Elveflow Library
+ * Mux Device
+ * 
+ * Set the vavle type.
+ * This function is available for MUX Wire V3 using custom Valves or Valve V2.
+ * Valve V3 type are automatically recognized by the MUX
+ * 
+ * ValveNB (MUX port where your valve is plugged)
+ * Type (Type of valve plugged)
+ * 
+ */
+int32_t __cdecl MUX_Set_valves_Type(int32_t MUX_ID_in, int32_t ValveNb, 
+	Enum Type);
 
 MgErr __cdecl LVDLLStatus(char *errStr, int errStrLen, void *module);
 

@@ -50,6 +50,14 @@ typedef uint16_t  Z_MUX_DRI_Action;
 typedef uint16_t  Z_Trigger_type;
 #define Z_Trigger_type_Low 0
 #define Z_Trigger_type_High 1
+typedef uint16_t  Enum;
+#define Enum_UNDEFINED 0
+#define Enum__22NormallyClosed 1
+#define Enum__22NormallyOpened 2
+#define Enum__32Universal 3
+#define Enum__22NormallyClosedCustom 4
+#define Enum__22NormallyOpenedCustom 5
+#define Enum__32UniversalCustom 6
 
 /*!
  * Elveflow Library
@@ -702,6 +710,30 @@ int32_t __cdecl M_S_R_D_Get_Trig(int32_t M_S_R_D_ID,
  */
 int32_t __cdecl M_S_R_D_Set_Trig(int32_t M_S_R_D_ID, 
 	Z_Trigger_type SetTriggerOutput);
+/*!
+ * Elveflow Library
+ * Mux Device
+ * 
+ * Get valve type plugged into your MUX Wire
+ * 
+ * 
+ */
+int32_t __cdecl MUX_Get_valves_Type(int32_t MUX_ID_in, int32_t Types_array[], 
+	int32_t len);
+/*!
+ * Elveflow Library
+ * Mux Device
+ * 
+ * Set the vavle type.
+ * This function is available for MUX Wire V3 using custom Valves or Valve V2.
+ * Valve V3 type are automatically recognized by the MUX
+ * 
+ * ValveNB (MUX port where your valve is plugged)
+ * Type (Type of valve plugged)
+ * 
+ */
+int32_t __cdecl MUX_Set_valves_Type(int32_t MUX_ID_in, int32_t ValveNb, 
+	Enum Type);
 
 MgErr __cdecl LVDLLStatus(char *errStr, int errStrLen, void *module);
 
