@@ -85,7 +85,7 @@ int32_t __cdecl MUX_Initialization(char Device_Name[], int32_t *MUX_ID_out);
  * 
  */
 int32_t __cdecl MUX_Set_all_valves(int32_t MUX_ID_in, 
-	int32_t array_valve_in[], int32_t len);
+	int32_t array_valve_in[], int32_t longueur);
 /*!
  * Elveflow Library
  * MUX D-R-I Device
@@ -117,7 +117,7 @@ int32_t __cdecl OB1_Initialization(char Device_Name[],
  * Set default Calib in Calib cluster, len is the Calib_Array_out array length
  */
 int32_t __cdecl Elveflow_Calibration_Default(double Calib_Array_out[], 
-	int32_t len);
+	int32_t longueur);
 /*!
  * Elveflow Library
  * OB1-AF1 Device
@@ -128,7 +128,7 @@ int32_t __cdecl Elveflow_Calibration_Default(double Calib_Array_out[],
  * or not a path. The function indicate if the file was found.
  */
 int32_t __cdecl Elveflow_Calibration_Load(char Path[], 
-	double Calib_Array_out[], int32_t len);
+	double Calib_Array_out[], int32_t longueur);
 /*!
  * Elveflow Library
  * OB1-AF1 Device
@@ -138,7 +138,7 @@ int32_t __cdecl Elveflow_Calibration_Load(char Path[],
  * path if Path is not valid, empty or not a path.
  */
 int32_t __cdecl Elveflow_Calibration_Save(char Path[], 
-	double Calib_Array_in[], int32_t len);
+	double Calib_Array_in[], int32_t longueur);
 /*!
  * Elveflow Library
  * OB1 Device
@@ -149,7 +149,7 @@ int32_t __cdecl Elveflow_Calibration_Save(char Path[],
  * Len correspond to the Calib_array_out length.
  */
 int32_t __cdecl OB1_Calib(int32_t OB1_ID_in, double Calib_array_out[], 
-	int32_t len);
+	int32_t longueur);
 /*!
  * Elveflow Library
  * OB1 Device
@@ -398,7 +398,7 @@ int32_t __cdecl Elveflow_EXAMPLE_PID(int32_t PID_ID_in, double currentValue,
  * 
  */
 int32_t __cdecl MUX_Wire_Set_all_valves(int32_t MUX_ID_in, 
-	int32_t array_valve_in[], int32_t len);
+	int32_t array_valve_in[], int32_t longueur);
 /*!
  * Elveflow Library
  * OB1 Device
@@ -522,7 +522,7 @@ int32_t __cdecl M_S_R_D_Destructor(int32_t M_S_R_D_ID);
  * valve for a session.
  */
 int32_t __cdecl MUX_DRI_Send_Command(int32_t MUX_DRI_ID_in, 
-	Z_MUX_DRI_Action Action, char Answer[], int32_t len);
+	Z_MUX_DRI_Action Action, char Answer[], int32_t longueur);
 /*!
  * Elveflow Library
  * MSRD Device
@@ -541,7 +541,7 @@ int32_t __cdecl M_S_R_D_Set_Filt(int32_t M_S_R_D_ID, int32_t Channel_1_to_4,
  * (get_remote_data, set_remote_target, remote_triggers) are recommended.
  */
 int32_t __cdecl OB1_Start_Remote_Measurement(int32_t OB1_ID, 
-	double Calib_array_in[], int32_t len);
+	double Calib_array_in[], int32_t longueur);
 /*!
  * Elveflow Library
  * OB1 Device
@@ -722,7 +722,7 @@ int32_t __cdecl M_S_R_D_Set_Trig(int32_t M_S_R_D_ID,
  * 
  */
 int32_t __cdecl MUX_Get_valves_Type(int32_t MUX_ID_in, int32_t Types_array[], 
-	int32_t len);
+	int32_t longueur);
 /*!
  * Elveflow Library
  * Mux Device
