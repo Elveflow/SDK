@@ -1,4 +1,4 @@
-function [error] = OB1_Add_Sens(OB1_ID, Channel_1_to_4, SensorType, DigitalAnalog, FSens_Digit_Calib, FSens_Digit_Resolution, CustomSens_Voltage_5_to_25)
+function [error] = OB1_Add_Sens(OB1_ID, Channel_1_to_4, DigitalAnalog, SensorType, FSens_Digit_Calib, FSens_Digit_Resolution, CustomSens_Voltage_5_to_25)
  % Elveflow Library
  % OB1 Device
  % 
@@ -18,7 +18,7 @@ function [error] = OB1_Add_Sens(OB1_ID, Channel_1_to_4, SensorType, DigitalAnalo
  % If the sensor is not compatible with the OB1 version, or no digital sensor 
  % are detected an error will be thrown as output of the function.
  
-error=calllib('Elveflow64', 'OB1_Add_Sens' , OB1_ID, Channel_1_to_4, SensorType, DigitalAnalog, FSens_Digit_Calib, FSens_Digit_Resolution, CustomSens_Voltage_5_to_25);
+error=calllib('Elveflow64', 'OB1_Add_Sens' , OB1_ID, Channel_1_to_4, DigitalAnalog, SensorType, FSens_Digit_Calib, FSens_Digit_Resolution, CustomSens_Voltage_5_to_25);
 
 
 end

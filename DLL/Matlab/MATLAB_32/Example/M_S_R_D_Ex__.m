@@ -7,9 +7,9 @@
 %%%%%%%%%%%%%%%%%
 
 %define here the directory where .m, DLL and this script are 
-addpath('D:\dev\SDK\MATLAB_32\MATLAB_32\');%path for MATLAB"***.m" file
-addpath('D:\dev\SDK\MATLAB_32\MATLAB_32\DLL32\');%path for the DLL library
-addpath('D:\dev\SDK\MATLAB_32\Example\')%path for your script
+addpath('C:\Users\Kevin\Desktop\SDK_V3_10_00\DLL\Matlab\MATLAB_32\MATLAB_32\');%path for MATLAB"***.m" file
+addpath('C:\Users\Kevin\Desktop\SDK_V3_10_00\DLL\Matlab\MATLAB_32\MATLAB_32\DLL32');%path for the DLL library
+addpath('C:\Users\Kevin\Desktop\SDK_V3_10_00\DLL\Matlab\MATLAB_32\Example')%path for your script
 
 %always use Elveflow_Load at the beginning, it loads the DLL
 Elveflow_Load;
@@ -19,7 +19,7 @@ answer='empty_string';%store the user answer in this variable
 
 %create equivalent of char[] to communicate with the DLL
 %the instrument name can be found in NIMAX
-Instrument_Name = libpointer('cstring','01EE3A1A');%here instrument name is 01DAA568
+Instrument_Name = libpointer('cstring','020B8FE7');%here instrument name is 01DAA568
 
 
 %pointer to store the instrument ID (no array)
@@ -32,7 +32,7 @@ error=M_S_R_D_Initialization(Instrument_Name,5,0,0,0,0,0,Inst_ID);%remember that
 CheckError(error);
 
 %add sensor
-error=M_S_R_D_Add_Sens(Inst_ID.Value,1,5,1,0,7); %add digital flow sensor. if sensor is not detected it will throw an error
+error=M_S_R_D_Add_Sens(Inst_ID.Value,1,5,1,0,7,0); %add digital flow sensor. if sensor is not detected it will throw an error
 CheckError(error);
 
 %error=M_S_R_D_Set_Filt(Inst_ID.Value,1,true); %set analog filter for channel 1
@@ -64,7 +64,7 @@ while (~strcmp(answer,'exit')) %loop until user enters exit
     if strcmp(answer,'get sensor')
         prompt = 'which channel (1-4)?';
         channel_n=input(prompt);
-        error = M_S_R_D_Get_Sens_Data(Inst_ID.Value,channel_n, sensor_value_Ptr );
+        error = M_S_R_D_Get_Data(Inst_ID.Value,channel_n, sensor_value_Ptr );
         CheckError(error);
         disp(strcat('sensor',num2str(channel_n),'= ' , num2str(sensor_value_Ptr.Value)));
     end

@@ -32,6 +32,12 @@ typedef uint16_t  Z_sensor_type;
 #define Z_sensor_type_Press_16_bar 12
 #define Z_sensor_type_Level 13
 #define Z_sensor_type_Custom 14
+#define Z_sensor_type_MFSD6_40000_muL_min 15
+#define Z_sensor_type_MPSD1 16
+#define Z_sensor_type_MPSD2 17
+#define Z_sensor_type_MPSD3 18
+#define Z_sensor_type_MPSD4 19
+#define Z_sensor_type_MPSD5 20
 typedef uint16_t  Z_Sensor_digit_analog;
 #define Z_Sensor_digit_analog_Analog 0
 #define Z_Sensor_digit_analog_Digital 1
@@ -112,35 +118,6 @@ int32_t __cdecl OB1_Initialization(char Device_Name[],
 	Z_regulator_type Reg_Ch_3, Z_regulator_type Reg_Ch_4, int32_t *OB1_ID_out);
 /*!
  * Elveflow Library
- * OB1-AF1 Device
- * 
- * Set default Calib in Calib cluster, len is the Calib_Array_out array length
- */
-int32_t __cdecl Elveflow_Calibration_Default(double Calib_Array_out[], 
-	int32_t longueur);
-/*!
- * Elveflow Library
- * OB1-AF1 Device
- * 
- * Load the calibration file located at Path and returns the calibration 
- * parameters in the Calib_Array_out. len is the Calib_Array_out array length. 
- * The function asks the user to choose the path if Path is not valid, empty 
- * or not a path. The function indicate if the file was found.
- */
-int32_t __cdecl Elveflow_Calibration_Load(char Path[], 
-	double Calib_Array_out[], int32_t longueur);
-/*!
- * Elveflow Library
- * OB1-AF1 Device
- * 
- * Save the Calibration cluster in the file located at Path. len is the 
- * Calib_Array_in array length. The function prompt the user to choose the 
- * path if Path is not valid, empty or not a path.
- */
-int32_t __cdecl Elveflow_Calibration_Save(char Path[], 
-	double Calib_Array_in[], int32_t longueur);
-/*!
- * Elveflow Library
  * OB1 Device
  * 
  * Launch OB1 calibration and return the calibration array. Before 
@@ -148,28 +125,7 @@ int32_t __cdecl Elveflow_Calibration_Save(char Path[],
  * caps. 
  * Len correspond to the Calib_array_out length.
  */
-int32_t __cdecl OB1_Calib(int32_t OB1_ID_in, double Calib_array_out[], 
-	int32_t longueur);
-/*!
- * Elveflow Library
- * OB1 Device
- * 
- * 
- * Get the pressure of an OB1 channel. 
- * 
- * Calibration array is required (use Set_Default_Calib if required) and 
- * return a double . Len correspond to the Calib_array_in length. 
- * 
- * If Acquire_data is true, the OB1 acquires ALL regulator AND ALL analog 
- * sensor value. They are stored in the computer memory. Therefore, if several 
- * regulator values (OB1_Get_Press) and/or sensor values (OB1_Get_Sens_Data) 
- * have to be acquired simultaneously, set the Acquire_Data to true only for 
- * the First function. All the other can used the values stored in memory and 
- * are almost instantaneous. 
- */
-int32_t __cdecl OB1_Get_Press(int32_t OB1_ID, int32_t Channel_1_to_4, 
-	int32_t Acquire_Data1True0False, double Calib_array_in[], double *Pressure, 
-	int32_t Calib_Array_len);
+int32_t __cdecl OB1_Calib(int32_t OB1_ID_in);
 /*!
  * Elveflow Library
  * OB1 Device
@@ -178,8 +134,8 @@ int32_t __cdecl OB1_Get_Press(int32_t OB1_ID, int32_t Channel_1_to_4,
  * (use Set_Default_Calib if required). Len correspond to the Calib_array_in 
  * length.
  */
-int32_t __cdecl OB1_Set_Press(int32_t OB1_ID, int32_t Channel_1_to_4, 
-	double Pressure, double Calib_array_in[], int32_t Calib_Array_len);
+int32_t __cdecl OB1_Set_Press(int32_t OB1_ID, double PressureTarget, 
+	int32_t Channel_1_to_4);
 /*!
  * Elveflow Library
  * OB1 Device
@@ -191,38 +147,10 @@ int32_t __cdecl OB1_Destructor(int32_t OB1_ID);
  * Elveflow Library
  * OB1 Device
  * 
- * Read the sensor of the requested channel. ! This Function only convert data 
- * that are acquired in OB1_Acquire_data
- * Units : Flow sensor µl/min
- * Pressure : mbar
- * 
- * If Acquire_data is true, the OB1 acquires ALL regulator AND ALL analog 
- * sensor value. They are stored in the computer memory. Therefore, if several 
- * regulator values (OB1_Get_Press) and/or sensor values (OB1_Get_Sens_Data) 
- * have to be acquired simultaneously, set the Acquire_Data to true only for 
- * the First function. All the other can used the values stored in memory and 
- * are almost instantaneous. For Digital Sensor, that required another 
- * communication protocol, this parameter have no impact
- * 
- * NB: For Digital Flow Senor, If the connection is lots, OB1 will be reseted 
- * and the return value will be zero
- */
-int32_t __cdecl OB1_Get_Sens_Data(int32_t OB1_ID, int32_t Channel_1_to_4, 
-	int32_t Acquire_Data1True0False, double *Sens_Data);
-/*!
- * Elveflow Library
- * OB1 Device
- * 
- * Get the trigger of the OB1 (0 = 0V, 1 =3,3V)
+ * Get the trigger of the OB1 (0 = 0V, 1 =3,3V for MK3 devices, 5V for MK4 
+ * devices)
  */
 int32_t __cdecl OB1_Get_Trig(int32_t OB1_ID, int32_t *Trigger);
-/*!
- * Elveflow Library
- * OB1 Device
- * 
- * Set the trigger of the OB1 (0 = 0V, 1 =3,3V)
- */
-int32_t __cdecl OB1_Set_Trig(int32_t OB1_ID, int32_t trigger);
 /*!
  * Elveflow Library
  * Mux Device
@@ -325,43 +253,8 @@ int32_t __cdecl BFS_Destructor(int32_t BFS_ID_in);
  * the com port that could be found in windows device manager). It return the 
  * BFS ID (number >=0) to be used with other function 
  */
-int32_t __cdecl BFS_Initialization(char Visa_COM[], int32_t *BFS_ID_out);
-/*!
- * Elveflow Library
- * BFS Device
- * 
- * Get fluid density (in g/L) for the BFS defined by the BFS_ID
- */
-int32_t __cdecl BFS_Get_Density(int32_t BFS_ID_in, double *Density);
-/*!
- * Elveflow Library
- * BFS Device
- * 
- * Measure thefluid flow in (microL/min). !!! This function required an 
- * earlier density measurement!!! The density can either be measured only once 
- * at the beginning of the experiment (ensure that the fluid flow through the 
- * sensor prior to density measurement), or before every flow measurement if 
- * the density might change. If you get +inf or -inf, the density wasn't 
- * correctly measured. 
- */
-int32_t __cdecl BFS_Get_Flow(int32_t BFS_ID_in, double *Flow);
-/*!
- * Elveflow Library
- * BFS Device
- * 
- * Get the fluid temperature (in °C) of the BFS defined by the BFS_ID
- */
-int32_t __cdecl BFS_Get_Temperature(int32_t BFS_ID_in, double *Temperature);
-/*!
- * Elveflow Library
- * BFS Device
- * 
- * Set the instruement Filter. 0.000001= maximum filter -> slow change but 
- * very low noise.  1= no filter-> fast change but noisy. 
- * 
- * Default value is 0.1  
- */
-int32_t __cdecl BFS_Set_Filter(int32_t BFS_ID_in, double Filter_value);
+int32_t __cdecl BFS_Initialization(char Visa_COM[], double Filter, 
+	int32_t M_temp, int32_t M_density, int32_t *BFS_ID_out);
 /*!
  * Elveflow Library - ONLY FOR ILLUSTRATION - 
  * OB1 Devices
@@ -403,18 +296,13 @@ int32_t __cdecl MUX_Wire_Set_all_valves(int32_t MUX_ID_in,
  * Elveflow Library
  * OB1 Device
  * 
- * Set the pressure of all the channel of the selected OB1. Calibration array 
- * is required (use Set_Default_Calib if required). Calib_Array_Len correspond 
- * to the Calib_array_in length. It uses an array as pressures input. 
- * Pressure_Array_Len corresponds to the the pressure input array. The first 
- * number of the array correspond to the first channel, the seconds number to 
- * the seconds channels and so on. All the number above 4 are not taken into 
- * account. 
- * 
- * If only One channel need to be set, use OB1_Set_Pressure.
+ * Returns all the pressure and sensor measurements on all 4 channels of the 
+ * OB1 device
  */
-int32_t __cdecl OB1_Set_All_Press(int32_t OB1_ID, double Pressure_array_in[], 
-	double Calib_array_in[], int32_t Pressure_Array_Len, int32_t Calib_Array_Len);
+int32_t __cdecl OB1_Get_All_Data(int32_t OB1_ID, double *PressureChannel1, 
+	double *SensorChannel1, double *PressureChannel2, double *SensorChannel2, 
+	double *PressureChannel3, double *SensorChannel3, double *PressureChannel4, 
+	double *SensorChannel4);
 /*!
  * Elveflow Library
  * BFS Device
@@ -423,14 +311,7 @@ int32_t __cdecl OB1_Set_All_Press(int32_t OB1_ID, double Pressure_array_in[],
  * performed; it is advised to use valves.
  * The calibration procedure is finished when the green LED stop blinking.
  */
-int32_t __cdecl BFS_Zeroing(int32_t BFS_ID_in);
-/*!
- * Elveflow Library
- * BFS Device
- * 
- * Get the fluid mass flow in (g/h) of the BFS defined by the BFS_ID
- */
-int32_t __cdecl BFS_Get_Mass_Flow(int32_t BFS_ID_in, double *MassFlow);
+int32_t __cdecl BFS_Zero(int32_t BFS_ID_in);
 /*!
  * Warning: advanced feature. Reset OB1 communication for pressure and flow.
  */
@@ -466,7 +347,8 @@ int32_t __cdecl OB1_Reset_Digit_Sens(int32_t OB1_ID, int32_t Channel_1_to_4);
 int32_t __cdecl M_S_R_D_Add_Sens(int32_t M_S_R_D_ID, int32_t Channel_1_to_4, 
 	Z_sensor_type SensorType, Z_Sensor_digit_analog DigitalAnalog, 
 	Z_Sensor_FSD_Calib FSens_Digit_Calib, 
-	Z_D_F_S_Resolution FSens_Digit_Resolution);
+	Z_D_F_S_Resolution FSens_Digit_Resolution, 
+	double Custom_Sensor_VoltageIn525VOptional);
 /*!
  * Elveflow Library
  * MSRD Device
@@ -500,8 +382,8 @@ int32_t __cdecl M_S_R_D_Initialization(char Device_Name[],
  * NB: For Digital Flow Senor, If the connection is lost, MSRD will be reseted 
  * and the return value will be zero
  */
-int32_t __cdecl M_S_R_D_Get_Sens_Data(int32_t M_S_R_D_ID, 
-	int32_t Channel_1_to_4, double *Sens_Data);
+int32_t __cdecl M_S_R_D_Get_Data(int32_t M_S_R_D_ID, int32_t Channel_1_to_4, 
+	double *Sens_Data);
 /*!
  * Elveflow Library
  * MSRD Device
@@ -530,35 +412,7 @@ int32_t __cdecl MUX_DRI_Send_Command(int32_t MUX_DRI_ID_in,
  * Set filter for the corresponding channel.
  */
 int32_t __cdecl M_S_R_D_Set_Filt(int32_t M_S_R_D_ID, int32_t Channel_1_to_4, 
-	LVBoolean ONOFF);
-/*!
- * Elveflow Library
- * OB1 Device
- * 
- * Start a loop running in the background, and automatically reads all sensors 
- * and regulators. No direct call to the OB1 can be made until the Stop 
- * measuring function is called. Until then only functions accessing this loop 
- * (get_remote_data, set_remote_target, remote_triggers) are recommended.
- */
-int32_t __cdecl OB1_Start_Remote_Measurement(int32_t OB1_ID, 
-	double Calib_array_in[], int32_t longueur);
-/*!
- * Elveflow Library
- * OB1 Device
- * 
- * Stop the background measure & control loop
- */
-int32_t __cdecl OB1_Stop_Remote_Measurement(int32_t OB1_ID);
-/*!
- * Elveflow Library
- * OB1 Device
- * 
- * Set the Target of the OB1 selected channel. Modify the pressure if the PID 
- * is off, or the sensor is a pressure sensor. Modify a flow if the sensor is 
- * a flow sensor and the PID is on.
- */
-int32_t __cdecl OB1_Set_Remote_Target(int32_t OB1_ID, int32_t Channel_1_to_4, 
-	double Target);
+	int32_t FilterRunning);
 /*!
  * Elveflow Library
  * OB1 Device
@@ -572,7 +426,7 @@ int32_t __cdecl OB1_Set_Remote_Target(int32_t OB1_ID, int32_t Channel_1_to_4,
  * NB: For Digital Flow Senor, If the connection is lost, OB1 will be reseted 
  * and the return value will be zero
  */
-int32_t __cdecl OB1_Get_Remote_Data(int32_t OB1_ID, int32_t Channel_1_to_4, 
+int32_t __cdecl OB1_Get_Data(int32_t OB1_ID, int32_t Channel_1_to_4, 
 	double *Reg_Data, double *Sens_Data);
 /*!
  * Elveflow Library
@@ -597,35 +451,21 @@ int32_t __cdecl PID_Set_Running_Remote(int32_t Regulator_ID,
  * Elveflow Library
  * BFS Device
  * 
- * Start the monitoring loop for the BFS device.
- */
-int32_t __cdecl BFS_Start_Remote_Measurement(int32_t BFS_ID);
-/*!
- * Elveflow Library
- * BFS Device
- * 
- * Stop the monitoring loop for the BFS device.
- */
-int32_t __cdecl BFS_Stop_Remote_Measurement(int32_t BFS_ID);
-/*!
- * Elveflow Library
- * BFS Device
- * 
  * Read the sensors from the remote monitoring loop:
  * Units: Flow sensor: µl/min
  *            Density: g/m3
  *            Temperature: Celcius
  */
-int32_t __cdecl BFS_Get_Remote_Data(int32_t BFS_ID, double *Temperature, 
-	double *Density, double *Flow);
+int32_t __cdecl BFS_Get_Data(int32_t BFS_ID, double *Flow, 
+	double *Temperature, double *Density);
 /*!
  * Elveflow Library
  * OB1 Device
  * 
- * Set the Trigger input and get the Trigger output of the OB1 device.
+ * Set the trigger of the OB1 (0 = 0V, 1 =3,3V for MK3 devices, 5V for MK4 
+ * devices)
  */
-int32_t __cdecl OB1_Remote_Triggers(int32_t OB1_ID, int32_t TriggerIn, 
-	int32_t *TriggerOut);
+int32_t __cdecl OB1_Set_Trig(int32_t OB1_ID, int32_t TriggerIn);
 /*!
  * Elveflow Library
  * PID Module
@@ -637,33 +477,6 @@ int32_t __cdecl PID_Set_Params_Remote(int32_t Regulator_ID,
 	int32_t Channel_1_to_4, int32_t Reset, double P, double I);
 /*!
  * Elveflow Library
- * MSRD Device
- * 
- * Start the monitoring loop for the MSRD device.
- */
-int32_t __cdecl M_S_R_D_Start_Remote_Measurement(int32_t M_S_R_D_ID);
-/*!
- * Elveflow Library
- * MSRD Device
- * 
- * Stop the monitoring loop for the MSRD device.
- */
-int32_t __cdecl M_S_R_D_Stop_Remote_Measurement(int32_t M_S_R_D_ID);
-/*!
- * Elveflow Library
- * MSRD Device
- * 
- * Read the sensor of the requested channel.s
- * Units: Flow sensor: µl/min
- * Pressure: mbar
- * 
- * NB: For Digital Flow Senor, If the connection is lost, MSRD will be reseted 
- * and the return value will be zero
- */
-int32_t __cdecl M_S_R_D_Get_Remote_Data(int32_t M_S_R_D_ID, 
-	int32_t Channel_1_to_4, double *Sens_Data);
-/*!
- * Elveflow Library
  * BFS Device
  * 
  * Modify the parameters of the remote monitoring loop:
@@ -673,8 +486,8 @@ int32_t __cdecl M_S_R_D_Get_Remote_Data(int32_t M_S_R_D_ID,
  * measurement
  * Filter: change the filter used to measure the flow
  */
-int32_t __cdecl BFS_Set_Remote_Params(int32_t BFS_ID, double Filter, 
-	int32_t M_temp, int32_t M_density);
+int32_t __cdecl BFS_Set_Params(int32_t BFS_ID, double Filter, int32_t M_temp, 
+	int32_t M_density);
 /*!
  * Warning: advanced feature. Reset MSRD communication.
  */
@@ -737,6 +550,44 @@ int32_t __cdecl MUX_Get_valves_Type(int32_t MUX_ID_in, int32_t Types_array[],
  */
 int32_t __cdecl MUX_Set_valves_Type(int32_t MUX_ID_in, int32_t ValveNb, 
 	Enum Type);
+/*!
+ * Elveflow Library
+ * OB1 Device
+ * 
+ * Launch OB1 calibration and return the calibration array. Before 
+ * Calibration, ensure that ALL channels are proprely closed with adequate 
+ * caps. 
+ * Len correspond to the Calib_array_out length.
+ */
+int32_t __cdecl OB1_Calib_Load(int32_t OB1_ID_in, char Path[]);
+/*!
+ * Elveflow Library
+ * OB1 Device
+ * 
+ * Saves the actual calibration to the desired path. The function prompts the 
+ * user to choose a path if no path is specified.
+ */
+int32_t __cdecl OB1_Calib_Save(int32_t OB1_ID_in, char Path[]);
+/*!
+ * Elveflow Library
+ * OB1 Device
+ * 
+ * Set the Target of the OB1 selected channel. Modify the pressure if the PID 
+ * is off, or the sensor is a pressure sensor. Modify a flow if the sensor is 
+ * a flow sensor and the PID is on.
+ */
+int32_t __cdecl OB1_Set_Sens(int32_t OB1_ID, int32_t Channel_1_to_4, 
+	double Target);
+/*!
+ * Elveflow Library
+ * BFS Device
+ * 
+ * Set the instruement Filter. 0.000001= maximum filter -> slow change but 
+ * very low noise.  1= no filter-> fast change but noisy. 
+ * 
+ * Default value is 0.1  
+ */
+int32_t __cdecl BFS_Set_Filter(int32_t BFS_ID_in, double Filter_value);
 
 MgErr __cdecl LVDLLStatus(char *errStr, int errStrLen, void *module);
 

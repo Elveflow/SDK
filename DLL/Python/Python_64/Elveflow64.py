@@ -1,15 +1,20 @@
+# Python wrapper for ElveFlow64DLL
+# Version : 3.10
+# Author : Elveflow
+# Copyright : Copyright © 2025
+
 # this python routine load the ElveflowDLL.
 # It defines all function prototype for use with python lib
 
 from ctypes import *
-ElveflowDLL=CDLL('D:/dev/SDK/DLL64/DLL64/Elveflow64.dll')# change this path 
+ElveflowDLL=CDLL('C:/dev/SDK/DLL64/DLL64/Elveflow64.dll')# change this path 
 
 
  # Elveflow Library
  # Mux Device
  # 
  # Initiate the MUX device using device name (could be obtained in NI MAX). It 
- # return the MUX ID (number >=0) to be used with other function
+ # return the F_S_R ID (number >=0) to be used with other function
  #
 def MUX_Initialization (Device_Name, MUX_ID_out):
 	X_MUX_Initialization=ElveflowDLL.MUX_Initialization
@@ -71,50 +76,6 @@ def OB1_Initialization (Device_Name, Reg_Ch_1, Reg_Ch_2, Reg_Ch_3, Reg_Ch_4, OB1
 
 
  # Elveflow Library
- # OB1-AF1 Device
- # 
- # Set default Calib in Calib cluster, len is the Calib_Array_out array length
- #
-# use ctypes c_double*1000 for calibration array
-def Elveflow_Calibration_Default (Calib_Array_out, len):
-	X_Elveflow_Calibration_Default=ElveflowDLL.Elveflow_Calibration_Default
-	X_Elveflow_Calibration_Default.argtypes=[POINTER(c_double*1000), c_int32]
-	return X_Elveflow_Calibration_Default (Calib_Array_out, len)
-
-
-
- # Elveflow Library
- # OB1-AF1 Device
- # 
- # Load the calibration file located at Path and returns the calibration 
- # parameters in the Calib_Array_out. len is the Calib_Array_out array length. 
- # The function asks the user to choose the path if Path is not valid, empty 
- # or not a path. The function indicate if the file was found.
- #
-# use ctypes c_double*1000 for calibration array
-def Elveflow_Calibration_Load (Path, Calib_Array_out, len):
-	X_Elveflow_Calibration_Load=ElveflowDLL.Elveflow_Calibration_Load
-	X_Elveflow_Calibration_Load.argtypes=[c_char_p, POINTER(c_double*1000), c_int32]
-	return X_Elveflow_Calibration_Load (Path, Calib_Array_out, len)
-
-
-
- # Elveflow Library
- # OB1-AF1 Device
- # 
- # Save the Calibration cluster in the file located at Path. len is the 
- # Calib_Array_in array length. The function prompt the user to choose the 
- # path if Path is not valid, empty or not a path.
- #
-# use ctypes c_double*1000 for calibration array
-def Elveflow_Calibration_Save (Path, Calib_Array_in, len):
-	X_Elveflow_Calibration_Save=ElveflowDLL.Elveflow_Calibration_Save
-	X_Elveflow_Calibration_Save.argtypes=[c_char_p, POINTER(c_double*1000), c_int32]
-	return X_Elveflow_Calibration_Save (Path, Calib_Array_in, len)
-
-
-
- # Elveflow Library
  # OB1 Device
  # 
  # Launch OB1 calibration and return the calibration array. Before 
@@ -123,35 +84,10 @@ def Elveflow_Calibration_Save (Path, Calib_Array_in, len):
  # Len correspond to the Calib_array_out length.
  #
 # use ctypes c_double*1000 for calibration array
-def OB1_Calib (OB1_ID_in, Calib_array_out, len):
+def OB1_Calib (OB1_ID_in):
 	X_OB1_Calib=ElveflowDLL.OB1_Calib
-	X_OB1_Calib.argtypes=[c_int32, POINTER(c_double*1000), c_int32]
-	return X_OB1_Calib (OB1_ID_in, Calib_array_out, len)
-
-
-
- # Elveflow Library
- # OB1 Device
- # 
- # 
- # Get the pressure of an OB1 channel. 
- # 
- # Calibration array is required (use Set_Default_Calib if required) and 
- # return a double . Len correspond to the Calib_array_in length. 
- # 
- # If Acquire_data is true, the OB1 acquires ALL regulator AND ALL analog 
- # sensor value. They are stored in the computer memory. Therefore, if several 
- # regulator values (OB1_Get_Press) and/or sensor values (OB1_Get_Sens_Data) 
- # have to be acquired simultaneously, set the Acquire_Data to true only for 
- # the First function. All the other can used the values stored in memory and 
- # are almost instantaneous. 
- #
-# use ctypes c_double*1000 for calibration array
-# use ctype c_double*4 for pressure array
-def OB1_Get_Press (OB1_ID, Channel_1_to_4, Acquire_Data1True0False, Calib_array_in, Pressure, Calib_Array_len):
-	X_OB1_Get_Press=ElveflowDLL.OB1_Get_Press
-	X_OB1_Get_Press.argtypes=[c_int32, c_int32, c_int32, POINTER(c_double*1000), POINTER(c_double), c_int32]
-	return X_OB1_Get_Press (OB1_ID, Channel_1_to_4, Acquire_Data1True0False, Calib_array_in, Pressure, Calib_Array_len)
+	X_OB1_Calib.argtypes=[c_int32]
+	return X_OB1_Calib (OB1_ID_in)
 
 
 
@@ -163,54 +99,10 @@ def OB1_Get_Press (OB1_ID, Channel_1_to_4, Acquire_Data1True0False, Calib_array_
  # length.
  #
 # use ctypes c_double*1000 for calibration array
-def OB1_Set_Press (OB1_ID, Channel_1_to_4, Pressure, Calib_array_in, Calib_Array_len):
+def OB1_Set_Press (OB1_ID, Channel_1_to_4, PressureTarget):
 	X_OB1_Set_Press=ElveflowDLL.OB1_Set_Press
-	X_OB1_Set_Press.argtypes=[c_int32, c_int32, c_double, POINTER(c_double*1000), c_int32]
-	return X_OB1_Set_Press (OB1_ID, Channel_1_to_4, Pressure, Calib_array_in, Calib_Array_len)
-
-
-
- # Elveflow Library
- # AF1 Device
- # 
- # Launch AF1 calibration and return the calibration array. Len correspond to 
- # the Calib_array_out length.
- #
-# use ctypes c_double*1000 for calibration array
-def AF1_Calib (AF1_ID_in, Calib_array_out, len):
-	X_AF1_Calib=ElveflowDLL.AF1_Calib
-	X_AF1_Calib.argtypes=[c_int32, POINTER(c_double*1000), c_int32]
-	return X_AF1_Calib (AF1_ID_in, Calib_array_out, len)
-
-
-
- # Elveflow Library
- # AF1 Device
- # 
- # Get the pressure of the AF1 device, Calibration array is required (use 
- # Set_Default_Calib if required). Len correspond to the Calib_array_in 
- # length.
- #
-# use ctypes c_double*1000 for calibration array
-def AF1_Get_Press (AF1_ID_in, Integration_time, Calib_array_in, Pressure, len):
-	X_AF1_Get_Press=ElveflowDLL.AF1_Get_Press
-	X_AF1_Get_Press.argtypes=[c_int32, c_int32, POINTER(c_double*1000), POINTER(c_double), c_int32]
-	return X_AF1_Get_Press (AF1_ID_in, Integration_time, Calib_array_in, Pressure, len)
-
-
-
- # Elveflow Library
- # AF1 Device
- # 
- # Set the pressure of the AF1 device, Calibration array is required (use 
- # Set_Default_Calib if required).Len correspond to the Calib_array_in length.
- # 
- #
-# use ctypes c_double*1000 for calibration array
-def AF1_Set_Press (AF1_ID_in, Pressure, Calib_array_in, len):
-	X_AF1_Set_Press=ElveflowDLL.AF1_Set_Press
-	X_AF1_Set_Press.argtypes=[c_int32, c_double, POINTER(c_double*1000), c_int32]
-	return X_AF1_Set_Press (AF1_ID_in, Pressure, Calib_array_in, len)
+	X_OB1_Set_Press.argtypes=[c_int32, c_int32, c_double]
+	return X_OB1_Set_Press (OB1_ID, Channel_1_to_4, PressureTarget)
 
 
 
@@ -229,50 +121,14 @@ def OB1_Destructor (OB1_ID):
  # Elveflow Library
  # OB1 Device
  # 
- # Read the sensor of the requested channel. ! This Function only convert data 
- # that are acquired in OB1_Acquire_data
- # Units : Flow sensor ï¿½l/min
- # Pressure : mbar
- # 
- # If Acquire_data is true, the OB1 acquires ALL regulator AND ALL analog 
- # sensor value. They are stored in the computer memory. Therefore, if several 
- # regulator values (OB1_Get_Press) and/or sensor values (OB1_Get_Sens_Data) 
- # have to be acquired simultaneously, set the Acquire_Data to true only for 
- # the First function. All the other can used the values stored in memory and 
- # are almost instantaneous. For Digital Sensor, that required another 
- # communication protocol, this parameter have no impact
- # 
- # NB: For Digital Flow Senor, If the connection is lots, OB1 will be reseted 
- # and the return value will be zero
- #
-def OB1_Get_Sens_Data (OB1_ID, Channel_1_to_4, Acquire_Data1True0False, Sens_Data):
-	X_OB1_Get_Sens_Data=ElveflowDLL.OB1_Get_Sens_Data
-	X_OB1_Get_Sens_Data.argtypes=[c_int32, c_int32, c_int32, POINTER(c_double)]
-	return X_OB1_Get_Sens_Data (OB1_ID, Channel_1_to_4, Acquire_Data1True0False, Sens_Data)
-
-
-
- # Elveflow Library
- # OB1 Device
- # 
- # Get the trigger of the OB1 (0 = 0V, 1 =3,3V)
+ # Get the trigger of the OB1 (0 = 0V, 1 =3,3V for MK3 devices, 5V for MK4 
+ # devices)
  #
 def OB1_Get_Trig (OB1_ID, Trigger):
 	X_OB1_Get_Trig=ElveflowDLL.OB1_Get_Trig
 	X_OB1_Get_Trig.argtypes=[c_int32, POINTER(c_int32)]
 	return X_OB1_Get_Trig (OB1_ID, Trigger)
 
-
-
- # Elveflow Library
- # OB1 Device
- # 
- # Set the trigger of the OB1 (0 = 0V, 1 =3,3V)
- #
-def OB1_Set_Trig (OB1_ID, trigger):
-	X_OB1_Set_Trig=ElveflowDLL.OB1_Set_Trig
-	X_OB1_Set_Trig.argtypes=[c_int32, c_int32]
-	return X_OB1_Set_Trig (OB1_ID, trigger)
 
 
  # Elveflow Library
@@ -373,7 +229,7 @@ def MUX_DRI_Set_Valve (MUX_DRI_ID_in, selected_Valve, Rotation):
  # Elveflow Library
  # OB1 Device
  # 
- # Add sensor to OB1 device. Select the channel nï¿½ (1-4) the sensor type. 
+ # Add sensor to OB1 device. Select the channel n° (1-4) the sensor type. 
  # 
  # For Flow sensor, the type of communication (Analog/Digital), the 
  # Calibration for digital version (H20 or IPA) should be specify as well as 
@@ -389,10 +245,10 @@ def MUX_DRI_Set_Valve (MUX_DRI_ID_in, selected_Valve, Rotation):
  # If the sensor is not compatible with the OB1 version, or no digital sensor 
  # are detected an error will be thrown as output of the function.
  #
-def OB1_Add_Sens (OB1_ID, Channel_1_to_4, SensorType, DigitalAnalog, FSens_Digit_Calib, FSens_Digit_Resolution, CustomSens_Voltage_5_to_25):
+def OB1_Add_Sens (OB1_ID, Channel_1_to_4, DigitalAnalog, SensorType, FSens_Digit_Calib, FSens_Digit_Resolution, CustomSens_Voltage_5_to_25):
 	X_OB1_Add_Sens=ElveflowDLL.OB1_Add_Sens
 	X_OB1_Add_Sens.argtypes=[c_int32, c_int32, c_uint16, c_uint16, c_uint16, c_uint16, c_double]
-	return X_OB1_Add_Sens (OB1_ID, Channel_1_to_4, SensorType, DigitalAnalog, FSens_Digit_Calib, FSens_Digit_Resolution, CustomSens_Voltage_5_to_25)
+	return X_OB1_Add_Sens (OB1_ID, Channel_1_to_4, DigitalAnalog, SensorType, FSens_Digit_Calib, FSens_Digit_Resolution, CustomSens_Voltage_5_to_25)
 
 
 
@@ -415,71 +271,15 @@ def BFS_Destructor (BFS_ID_in):
  # the com port that could be found in windows device manager). It return the 
  # BFS ID (number >=0) to be used with other function 
  #
-def BFS_Initialization (Visa_COM, BFS_ID_out):
+def BFS_Initialization (Visa_COM, Filter, M_temp, M_density, BFS_ID_out):
 	X_BFS_Initialization=ElveflowDLL.BFS_Initialization
-	X_BFS_Initialization.argtypes=[c_char_p, POINTER(c_int32)]
-	return X_BFS_Initialization (Visa_COM, BFS_ID_out)
-
-
-
- # Elveflow Library
- # BFS Device
- # 
- # Get fluid density (in g/L) for the BFS defined by the BFS_ID
- #
-def BFS_Get_Density (BFS_ID_in, Density):
-	X_BFS_Get_Density=ElveflowDLL.BFS_Get_Density
-	X_BFS_Get_Density.argtypes=[c_int32, POINTER(c_double)]
-	return X_BFS_Get_Density (BFS_ID_in, Density)
-
-
-
- # Elveflow Library
- # BFS Device
- # 
- # Measure thefluid flow in (microL/min). !!! This function required an 
- # earlier density measurement!!! The density can either be measured only once 
- # at the beginning of the experiment (ensure that the fluid flow through the 
- # sensor prior to density measurement), or before every flow measurement if 
- # the density might change. If you get +inf or -inf, the density wasn't 
- # correctly measured. 
- #
-def BFS_Get_Flow (BFS_ID_in, Flow):
-	X_BFS_Get_Flow=ElveflowDLL.BFS_Get_Flow
-	X_BFS_Get_Flow.argtypes=[c_int32, POINTER(c_double)]
-	return X_BFS_Get_Flow (BFS_ID_in, Flow)
-
-
-
- # Elveflow Library
- # BFS Device
- # 
- # Get the fluid temperature (in ï¿½C) of the BFS defined by the BFS_ID
- #
-def BFS_Get_Temperature (BFS_ID_in, Temperature):
-	X_BFS_Get_Temperature=ElveflowDLL.BFS_Get_Temperature
-	X_BFS_Get_Temperature.argtypes=[c_int32, POINTER(c_double)]
-	return X_BFS_Get_Temperature (BFS_ID_in, Temperature)
-
-
-
- # Elveflow Library
- # BFS Device
- # 
- # Set the instruement Filter. 0.000001= maximum filter -> slow change but 
- # very low noise.  1= no filter-> fast change but noisy. 
- # 
- # Default value is 0.1  
- #
-def BFS_Set_Filter (BFS_ID_in, Filter_value):
-	X_BFS_Set_Filter=ElveflowDLL.BFS_Set_Filter
-	X_BFS_Set_Filter.argtypes=[c_int32, c_double]
-	return X_BFS_Set_Filter (BFS_ID_in, Filter_value)
+	X_BFS_Initialization.argtypes=[c_char_p, c_double, c_int32, c_int32, POINTER(c_int32)]
+	return X_BFS_Initialization (Visa_COM, Filter, M_temp, M_density, BFS_ID_out)
 
 
 
  # Elveflow Library - ONLY FOR ILLUSTRATION - 
- # OB1 and AF1 Devices
+ # OB1 Devices
  # 
  # This function is only provided for illustration purpose, to explain how to 
  # do your own feedback loop. Elveflow does not guarante neither efficient nor 
@@ -525,20 +325,13 @@ def MUX_Wire_Set_all_valves (MUX_ID_in, array_valve_in, len):
  # Elveflow Library
  # OB1 Device
  # 
- # Set the pressure of all the channel of the selected OB1. Calibration array 
- # is required (use Set_Default_Calib if required). Calib_Array_Len correspond 
- # to the Calib_array_in length. It uses an array as pressures input. 
- # Pressure_Array_Len corresponds to the the pressure input array. The first 
- # number of the array correspond to the first channel, the seconds number to 
- # the seconds channels and so on. All the number above 4 are not taken into 
- # account. 
- # 
- # If only One channel need to be set, use OB1_Set_Pressure.
+ # Returns all the pressure and sensor measurements on all 4 channels of the 
+ # OB1 device
  #
-def OB1_Set_All_Press (OB1_ID, Pressure_array_in, Calib_array_in, Pressure_Array_Len, Calib_Array_Len):
-	X_OB1_Set_All_Press=ElveflowDLL.OB1_Set_All_Press
-	X_OB1_Set_All_Press.argtypes=[c_int32, POINTER(c_double), POINTER(c_double*1000), c_int32, c_int32]
-	return X_OB1_Set_All_Press (OB1_ID, Pressure_array_in, Calib_array_in, Pressure_Array_Len, Calib_Array_Len)
+def OB1_Get_All_Data (OB1_ID, PressureChannel1, SensorChannel1, PressureChannel2, SensorChannel2, PressureChannel3, SensorChannel3, PressureChannel4, SensorChannel4):
+	X_OB1_Get_All_Data=ElveflowDLL.OB1_Get_All_Data
+	X_OB1_Get_All_Data.argtypes=[c_int32, POINTER(c_double), POINTER(c_double), POINTER(c_double), POINTER(c_double), POINTER(c_double), POINTER(c_double), POINTER(c_double), POINTER(c_double)]
+	return X_OB1_Get_All_Data (OB1_ID, PressureChannel1, SensorChannel1, PressureChannel2, SensorChannel2, PressureChannel3, SensorChannel3, PressureChannel4, SensorChannel4)
 
 
 
@@ -549,22 +342,10 @@ def OB1_Set_All_Press (OB1_ID, Pressure_array_in, Calib_array_in, Pressure_Array
  # performed; it is advised to use valves.
  # The calibration procedure is finished when the green LED stop blinking.
  #
-def BFS_Zeroing (BFS_ID_in):
-	X_BFS_Zeroing=ElveflowDLL.BFS_Zeroing
-	X_BFS_Zeroing.argtypes=[c_int32]
-	return X_BFS_Zeroing (BFS_ID_in)
-
-
-
- # Elveflow Library
- # BFS Device
- # 
- # Get the fluid mass flow in (g/h) of the BFS defined by the BFS_ID
- #
-def BFS_Get_Mass_Flow (BFS_ID_in, MassFlow):
-	X_BFS_Get_Mass_Flow=ElveflowDLL.BFS_Get_Mass_Flow
-	X_BFS_Get_Mass_Flow.argtypes=[c_int32, POINTER(c_double)]
-	return X_BFS_Get_Mass_Flow (BFS_ID_in, MassFlow)
+def BFS_Zero (BFS_ID_in):
+	X_BFS_Zero=ElveflowDLL.BFS_Zero
+	X_BFS_Zero.argtypes=[c_int32]
+	return X_BFS_Zero (BFS_ID_in)
 
 
 
@@ -615,7 +396,7 @@ def M_S_R_D_Initialization (Device_Name, Sens_Ch_1, Sens_Ch_2, Sens_Ch_3, Sens_C
  # Elveflow Library
  # MSRD Device
  # 
- # Add sensor to MSRD device. Select the channel nï¿½ (1-4) the sensor type. 
+ # Add sensor to MSRD device. Select the channel n° (1-4) the sensor type. 
  # 
  # For Flow sensor, the type of communication (Analog/Digital), the 
  # Calibration for digital version (H20 or IPA) should be specify as well as 
@@ -633,10 +414,10 @@ def M_S_R_D_Initialization (Device_Name, Sens_Ch_1, Sens_Ch_2, Sens_Ch_3, Sens_C
  # 
  # NB: Sensor type has to be the same as in the "Initialization" step.
  #
-def M_S_R_D_Add_Sens (M_S_R_D_ID, Channel_1_to_4, SensorType, DigitalAnalog, FSens_Digit_Calib, FSens_Digit_Resolution):
+def M_S_R_D_Add_Sens (M_S_R_D_ID, Channel_1_to_4, SensorType, DigitalAnalog, FSens_Digit_Calib, FSens_Digit_Resolution, Custom_Sensor_VoltageIn525VOptional):
 	X_M_S_R_D_Add_Sens=ElveflowDLL.M_S_R_D_Add_Sens
-	X_M_S_R_D_Add_Sens.argtypes=[c_int32, c_int32, c_uint16, c_uint16, c_uint16, c_uint16]
-	return X_M_S_R_D_Add_Sens (M_S_R_D_ID, Channel_1_to_4, SensorType, DigitalAnalog, FSens_Digit_Calib, FSens_Digit_Resolution)
+	X_M_S_R_D_Add_Sens.argtypes=[c_int32, c_int32, c_uint16, c_uint16, c_uint16, c_uint16, c_double]
+	return X_M_S_R_D_Add_Sens (M_S_R_D_ID, Channel_1_to_4, SensorType, DigitalAnalog, FSens_Digit_Calib, FSens_Digit_Resolution, Custom_Sensor_VoltageIn525VOptional)
 
 
 
@@ -656,16 +437,16 @@ def M_S_R_D_Destructor (M_S_R_D_ID):
  # MSRD Device
  # 
  # Read the sensor of the requested channel.s
- # Units: Flow sensor: ï¿½l/min
+ # Units: Flow sensor: µl/min
  # Pressure: mbar
  # 
  # NB: For Digital Flow Senor, If the connection is lost, MSRD will be reseted 
  # and the return value will be zero
  #
-def M_S_R_D_Get_Sens_Data (M_S_R_D_ID, Channel_1_to_4, Sens_Data):
-	X_M_S_R_D_Get_Sens_Data=ElveflowDLL.M_S_R_D_Get_Sens_Data
-	X_M_S_R_D_Get_Sens_Data.argtypes=[c_int32, c_int32, POINTER(c_double)]
-	return X_M_S_R_D_Get_Sens_Data (M_S_R_D_ID, Channel_1_to_4, Sens_Data)
+def M_S_R_D_Get_Data (M_S_R_D_ID, Channel_1_to_4, Sens_Data):
+	X_M_S_R_D_Get_Data=ElveflowDLL.M_S_R_D_Get_Data
+	X_M_S_R_D_Get_Data.argtypes=[c_int32, c_int32, POINTER(c_double)]
+	return X_M_S_R_D_Get_Data (M_S_R_D_ID, Channel_1_to_4, Sens_Data)
 
 
 
@@ -692,10 +473,10 @@ def MUX_DRI_Send_Command (MUX_DRI_ID_in, Action, Answer, len):
  # 
  # Set filter for the corresponding channel.
  #
-def M_S_R_D_Set_Filt (M_S_R_D_ID, Channel_1_to_4, ONOFF):
+def M_S_R_D_Set_Filt (M_S_R_D_ID, Channel_1_to_4, FilterRunning):
 	X_M_S_R_D_Set_Filt=ElveflowDLL.M_S_R_D_Set_Filt
-	X_M_S_R_D_Set_Filt.argtypes=[c_int32, c_int32, ]
-	return X_M_S_R_D_Set_Filt (M_S_R_D_ID, Channel_1_to_4, ONOFF)
+	X_M_S_R_D_Set_Filt.argtypes=[c_int32, c_int32, c_int32]
+	return X_M_S_R_D_Set_Filt (M_S_R_D_ID, Channel_1_to_4, FilterRunning)
 
 
 
@@ -705,57 +486,16 @@ def M_S_R_D_Set_Filt (M_S_R_D_ID, Channel_1_to_4, ONOFF):
  # Read the sensor and regulator values of the requested channel.
  # Warning: This Function only extracts data obtained in the remote 
  # measurement loop
- # Sensor unit : mbar if pressure sensor, ï¿½l/min if flow sensor
+ # Sensor unit : mbar if pressure sensor, µl/min if flow sensor
  # Regulator unit : mbar
  # 
  # NB: For Digital Flow Senor, If the connection is lost, OB1 will be reseted 
  # and the return value will be zero
  #
-def OB1_Get_Remote_Data (OB1_ID, Channel_1_to_4, Reg_Data, Sens_Data):
-	X_OB1_Get_Remote_Data=ElveflowDLL.OB1_Get_Remote_Data
-	X_OB1_Get_Remote_Data.argtypes=[c_int32, c_int32, POINTER(c_double), POINTER(c_double)]
-	return X_OB1_Get_Remote_Data (OB1_ID, Channel_1_to_4, Reg_Data, Sens_Data)
-
-
-
- # Elveflow Library
- # OB1 Device
- # 
- # Start a loop running in the background, and automatically reads all sensors 
- # and regulators. No direct call to the OB1 can be made until the Stop 
- # measuring function is called. Until then only functions accessing this loop 
- # (get_remote_data, set_remote_target, remote_triggers) are recommended.
- #
-def OB1_Start_Remote_Measurement (OB1_ID, Calib_array_in, len):
-	X_OB1_Start_Remote_Measurement=ElveflowDLL.OB1_Start_Remote_Measurement
-	X_OB1_Start_Remote_Measurement.argtypes=[c_int32, POINTER(c_double*1000), c_int32]
-	return X_OB1_Start_Remote_Measurement (OB1_ID, Calib_array_in, len)
-
-
-
- # Elveflow Library
- # OB1 Device
- # 
- # Stop the background measure & control loop
- #
-def OB1_Stop_Remote_Measurement (OB1_ID):
-	X_OB1_Stop_Remote_Measurement=ElveflowDLL.OB1_Stop_Remote_Measurement
-	X_OB1_Stop_Remote_Measurement.argtypes=[c_int32]
-	return X_OB1_Stop_Remote_Measurement (OB1_ID)
-
-
-
- # Elveflow Library
- # OB1 Device
- # 
- # Set the Target of the OB1 selected channel. Modify the pressure if the PID 
- # is off, or the sensor is a pressure sensor. Modify a flow if the sensor is 
- # a flow sensor and the PID is on.
- #
-def OB1_Set_Remote_Target (OB1_ID, Channel_1_to_4, Target):
-	X_OB1_Set_Remote_Target=ElveflowDLL.OB1_Set_Remote_Target
-	X_OB1_Set_Remote_Target.argtypes=[c_int32, c_int32, c_double]
-	return X_OB1_Set_Remote_Target (OB1_ID, Channel_1_to_4, Target)
+def OB1_Get_Data (OB1_ID, Channel_1_to_4, Reg_Data, Sens_Data):
+	X_OB1_Get_Data=ElveflowDLL.OB1_Get_Data
+	X_OB1_Get_Data.argtypes=[c_int32, c_int32, POINTER(c_double), POINTER(c_double)]
+	return X_OB1_Get_Data (OB1_ID, Channel_1_to_4, Reg_Data, Sens_Data)
 
 
 
@@ -783,42 +523,20 @@ def PID_Add_Remote (Regulator_ID, Regulator_Channel_1_to_4, ID_Sensor, Sensor_Ch
 	X_PID_Add_Remote.argtypes=[c_int32, c_int32, c_int32, c_int32, c_double, c_double, c_int32]
 	return X_PID_Add_Remote (Regulator_ID, Regulator_Channel_1_to_4, ID_Sensor, Sensor_Channel_1_to_4, P, I, Running)
 
- # Elveflow Library
- # BFS Device
- # 
- # Start the monitoring loop for the BFS device.
- #
-def BFS_Start_Remote_Measurement (BFS_ID):
-	X_BFS_Start_Remote_Measurement=ElveflowDLL.BFS_Start_Remote_Measurement
-	X_BFS_Start_Remote_Measurement.argtypes=[c_int32]
-	return X_BFS_Start_Remote_Measurement (BFS_ID)
-
-
-
- # Elveflow Library
- # BFS Device
- # 
- # Stop the monitoring loop for the BFS device.
- #
-def BFS_Stop_Remote_Measurement (BFS_ID):
-	X_BFS_Stop_Remote_Measurement=ElveflowDLL.BFS_Stop_Remote_Measurement
-	X_BFS_Stop_Remote_Measurement.argtypes=[c_int32]
-	return X_BFS_Stop_Remote_Measurement (BFS_ID)
-
 
 
  # Elveflow Library
  # BFS Device
  # 
  # Read the sensors from the remote monitoring loop:
- # Units: Flow sensor: ï¿½l/min
+ # Units: Flow sensor: µl/min
  #            Density: g/m3
  #            Temperature: Celcius
  #
-def BFS_Get_Remote_Data (BFS_ID, Flow, Density, Temperature):
-	X_BFS_Get_Remote_Data=ElveflowDLL.BFS_Get_Remote_Data
-	X_BFS_Get_Remote_Data.argtypes=[c_int32, POINTER(c_double), POINTER(c_double), POINTER(c_double)]
-	return X_BFS_Get_Remote_Data (BFS_ID, Flow, Density, Temperature)
+def BFS_Get_Data (BFS_ID, Flow, Temperature, Density):
+	X_BFS_Get_Data=ElveflowDLL.BFS_Get_Data
+	X_BFS_Get_Data.argtypes=[c_int32, POINTER(c_double), POINTER(c_double), POINTER(c_double)]
+	return X_BFS_Get_Data (BFS_ID, Flow, Temperature, Density)
 
 
 
@@ -832,63 +550,23 @@ def BFS_Get_Remote_Data (BFS_ID, Flow, Density, Temperature):
  # measurement
  # Filter: change the filter used to measure the flow
  #
-def BFS_Set_Remote_Params (BFS_ID, Filter, M_temp, M_density):
-	X_BFS_Set_Remote_Params=ElveflowDLL.BFS_Set_Remote_Params
-	X_BFS_Set_Remote_Params.argtypes=[c_int32, c_double, c_int32, c_int32]
-	return X_BFS_Set_Remote_Params (BFS_ID, Filter, M_temp, M_density)
-
-
-
- # Elveflow Library
- # MSRD Device
- # 
- # Start the monitoring loop for the MSRD device.
- #
-def M_S_R_D_Start_Remote_Measurement (M_S_R_D_ID):
-	X_M_S_R_D_Start_Remote_Measurement=ElveflowDLL.M_S_R_D_Start_Remote_Measurement
-	X_M_S_R_D_Start_Remote_Measurement.argtypes=[c_int32]
-	return X_M_S_R_D_Start_Remote_Measurement (M_S_R_D_ID)
-
-
-
- # Elveflow Library
- # MSRD Device
- # 
- # Stop the monitoring loop for the MSRD device.
- #
-def M_S_R_D_Stop_Remote_Measurement (M_S_R_D_ID):
-	X_M_S_R_D_Stop_Remote_Measurement=ElveflowDLL.M_S_R_D_Stop_Remote_Measurement
-	X_M_S_R_D_Stop_Remote_Measurement.argtypes=[c_int32]
-	return X_M_S_R_D_Stop_Remote_Measurement (M_S_R_D_ID)
-
-
-
- # Elveflow Library
- # MSRD Device
- # 
- # Read the sensor of the requested channel.s
- # Units: Flow sensor: ï¿½l/min
- # Pressure: mbar
- # 
- # NB: For Digital Flow Senor, If the connection is lost, MSRD will be reseted 
- # and the return value will be zero
- #
-def M_S_R_D_Get_Remote_Data (M_S_R_D_ID, Channel_1_to_4, Sens_Data):
-	X_M_S_R_D_Get_Remote_Data=ElveflowDLL.M_S_R_D_Get_Remote_Data
-	X_M_S_R_D_Get_Remote_Data.argtypes=[c_int32, c_int32, POINTER(c_double)]
-	return X_M_S_R_D_Get_Remote_Data (M_S_R_D_ID, Channel_1_to_4, Sens_Data)
+def BFS_Set_Params (BFS_ID, Filter, M_temp, M_density):
+	X_BFS_Set_Params=ElveflowDLL.BFS_Set_Params
+	X_BFS_Set_Params.argtypes=[c_int32, c_double, c_int32, c_int32]
+	return X_BFS_Set_Params (BFS_ID, Filter, M_temp, M_density)
 
 
 
  # Elveflow Library
  # OB1 Device
  # 
- # Set the Trigger input and get the Trigger output of the OB1 device.
+ # Set the trigger of the OB1 (0 = 0V, 1 =3,3V for MK3 devices, 5V for MK4 
+ # devices)
  #
-def OB1_Remote_Triggers (OB1_ID, TriggerIn, TriggerOut):
-	X_OB1_Remote_Triggers=ElveflowDLL.OB1_Remote_Triggers
-	X_OB1_Remote_Triggers.argtypes=[c_int32, c_int32, POINTER(c_int32)]
-	return X_OB1_Remote_Triggers (OB1_ID, TriggerIn, TriggerOut)
+def OB1_Set_Trig (OB1_ID, TriggerIn):
+	X_OB1_Set_Trig=ElveflowDLL.OB1_Set_Trig
+	X_OB1_Set_Trig.argtypes=[c_int32, c_int32]
+	return X_OB1_Set_Trig (OB1_ID, TriggerIn)
 
 
 
@@ -924,6 +602,16 @@ def M_S_R_D_Reset_Sens (M_S_R_D_ID):
 	return X_M_S_R_D_Reset_Sens (M_S_R_D_ID)
 
 
+
+ # Elveflow_Checkaliases
+ #
+def Elveflow_Checkaliases ():
+	X_Elveflow_Checkaliases=ElveflowDLL.Elveflow_Checkaliases
+	X_Elveflow_Checkaliases.argtypes=[]
+	return X_Elveflow_Checkaliases ()
+
+
+
  # Elveflow Library
  # MSR Device
  # 
@@ -953,3 +641,109 @@ def M_S_R_D_Set_Trig (M_S_R_D_ID, SetTriggerOutput):
 	X_M_S_R_D_Set_Trig=ElveflowDLL.M_S_R_D_Set_Trig
 	X_M_S_R_D_Set_Trig.argtypes=[c_int32, ]
 	return X_M_S_R_D_Set_Trig (M_S_R_D_ID, SetTriggerOutput)
+
+
+
+ # Elveflow Library
+ # Mux Device
+ # 
+ # Get valve type plugged into your MUX Wire
+ # 
+ # 
+ #
+def MUX_Get_valves_Type (MUX_ID_in, Types_array, len):
+	X_MUX_Get_valves_Type=ElveflowDLL.MUX_Get_valves_Type
+	X_MUX_Get_valves_Type.argtypes=[c_int32, POINTER(c_int32), c_int32]
+	return X_MUX_Get_valves_Type (MUX_ID_in, Types_array, len)
+
+
+
+ # Elveflow Library
+ # Mux Device
+ # 
+ # Set the vavle type.
+ # This function is available for MUX Wire V3 using custom Valves or Valve V2.
+ # Valve V3 type are automatically recognized by the MUX
+ # 
+ # ValveNB (MUX port where your valve is plugged)
+ # Type (Type of valve plugged)
+ # 
+ #
+def MUX_Set_valves_Type (MUX_ID_in, ValveNb, Type):
+	X_MUX_Set_valves_Type=ElveflowDLL.MUX_Set_valves_Type
+	X_MUX_Set_valves_Type.argtypes=[c_int32, c_int32, ]
+	return X_MUX_Set_valves_Type (MUX_ID_in, ValveNb, Type)
+
+
+
+ # Elveflow Library
+ # BFS Device
+ # 
+ # Set the instruement Filter. 0.000001= maximum filter -> slow change but 
+ # very low noise.  1= no filter-> fast change but noisy. 
+ # 
+ # Default value is 0.1  
+ #
+def BFS_Set_Filter (BFS_ID_in, Filter_value):
+	X_BFS_Set_Filter=ElveflowDLL.BFS_Set_Filter
+	X_BFS_Set_Filter.argtypes=[c_int32, c_double]
+	return X_BFS_Set_Filter (BFS_ID_in, Filter_value)
+
+
+
+ # Elveflow Library
+ # OB1 Device
+ # 
+ # Saves the actual calibration to the desired path. The function prompts the 
+ # user to choose a path if no path is specified.
+ #
+def OB1_Calib_Save (OB1_ID_in, Path):
+	X_OB1_Calib_Save=ElveflowDLL.OB1_Calib_Save
+	X_OB1_Calib_Save.argtypes=[c_int32, c_char_p]
+	return X_OB1_Calib_Save (OB1_ID_in, Path)
+
+
+
+ # Elveflow Library
+ # OB1 Device
+ # 
+ # Launch OB1 calibration and return the calibration array. Before 
+ # Calibration, ensure that ALL channels are proprely closed with adequate 
+ # caps. 
+ # Len correspond to the Calib_array_out length.
+ #
+def OB1_Calib_Load (OB1_ID_in, Path):
+	X_OB1_Calib_Load=ElveflowDLL.OB1_Calib_Load
+	X_OB1_Calib_Load.argtypes=[c_int32, c_char_p]
+	return X_OB1_Calib_Load (OB1_ID_in, Path)
+
+
+
+ # Elveflow Library
+ # OB1 Device
+ # 
+ # Set the Target of the OB1 selected channel. Modify the pressure if the PID 
+ # is off, or the sensor is a pressure sensor. Modify a flow if the sensor is 
+ # a flow sensor and the PID is on.
+ #
+def OB1_Set_Sens (OB1_ID, Channel_1_to_4, Target):
+	X_OB1_Set_Sens=ElveflowDLL.OB1_Set_Sens
+	X_OB1_Set_Sens.argtypes=[c_int32, c_int32, c_double]
+	return X_OB1_Set_Sens (OB1_ID, Channel_1_to_4, Target)
+
+
+
+
+def DEBUG_status():
+	Status = ElveflowDLL.LVDLLStatus
+	Status.argtypes=[c_char_p, c_int32, c_void_p]
+	# Prepare the parameters
+	err_str = create_string_buffer(256)  # Buffer for error message
+	err_str_len = c_int(len(err_str))  # Length of error message buffer
+	module = None  # Modify this depending on what "module" should reference
+	# Call the function
+	result = Status(err_str, err_str_len, module)
+
+	# Print the result
+	print(f"Function returned: {result}")
+	print(f"Error message: {err_str.value.decode()}")

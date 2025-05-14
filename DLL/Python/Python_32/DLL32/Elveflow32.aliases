@@ -2,4 +2,4 @@
 My Computer="localhost"
 
 [Poste de travail]
-Poste de travail="192.168.1.13"
+Poste de travail="172.24.128.1"

@@ -1,6 +1,6 @@
 function [error] = Elveflow_EXAMPLE_PID(PID_ID_in, currentValue, Reset, P, I, targetValue, PID_ID_out, value)
  % Elveflow Library - ONLY FOR ILLUSTRATION - 
- % OB1 and AF1 Devices
+ % OB1 Devices
  % 
  % This function is only provided for illustration purpose, to explain how to 
  % do your own feedback loop. Elveflow does not guarante neither efficient nor 

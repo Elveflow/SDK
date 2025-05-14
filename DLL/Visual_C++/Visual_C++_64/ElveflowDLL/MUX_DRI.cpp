@@ -23,7 +23,7 @@ int main_MUX_DRI()
 	int  MyMUX_DRI_ID = -1;
 	//initialize the MUX Distribution, Distributor, Recirculation or Injection -> Use NIMAX to determine the device name
 	//avoid non alphanumeric characters in device name
-	error = MUX_DRI_Initialization("ASRL11::INSTR", &MyMUX_DRI_ID);//Choose the com port, it can be ASRLXXX::INSTR (where XXX=port number)
+	error = MUX_DRI_Initialization("COM4", &MyMUX_DRI_ID);//Choose the com port, it can be ASRLXXX::INSTR (where XXX=port number)
 	Check_Error(error);//error sent if not recognized
 
 	char* Answer = new char[40];//define the answer (array of char). Size can vary, depending on the action asked but 40 is enough.

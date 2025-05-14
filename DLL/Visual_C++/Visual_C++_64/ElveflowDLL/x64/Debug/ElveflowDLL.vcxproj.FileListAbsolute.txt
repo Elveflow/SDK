@@ -1,1 +1,3 @@
 C:\Users\Kevin\Desktop\Visual_C++\Visual_C++_64\ElveflowDLL\x64\Debug\ElveflowDLL.exe
+C:\Users\Kevin\Downloads\ESI_V3_09_00\ESI_V3_09_00\SDK_V3_09_00\DLL\Visual_C++\Visual_C++_64\ElveflowDLL\x64\Debug\ElveflowDLL.exe
+C:\Users\Kevin\Desktop\ESI_V3_09_04\ESI_V3_09_04\SDK_V3_09_04\SDK_V3_09_04\SDK_V3_09_04\DLL\Visual_C++\Visual_C++_64\ElveflowDLL\x64\Debug\ElveflowDLL.exe

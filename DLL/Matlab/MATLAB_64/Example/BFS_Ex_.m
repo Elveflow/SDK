@@ -7,9 +7,10 @@
 %%%%%%%%%%%%%%%%%
 
 %define here the directory where .m, DLL and this script are 
-addpath('D:\dev\SDK\MATLAB_64\MATLAB_64\');%path for MATLAB"***.m" file
-addpath('D:\dev\SDK\MATLAB_64\MATLAB_64\DLL64\');%path for the DLL library
-addpath('D:\dev\SDK\MATLAB_64\Example\')%path for your script
+addpath('C:\Users\Kevin\Desktop\SDK_V3_10_00\DLL\Matlab\MATLAB_64\MATLAB_64\');%path for MATLAB"***.m" file
+addpath('C:\Users\Kevin\Desktop\SDK_V3_10_00\DLL\Matlab\MATLAB_64\MATLAB_64\DLL64');%path for the DLL library
+addpath('C:\Users\Kevin\Desktop\SDK_V3_10_00\DLL\Matlab\MATLAB_64\Example')%path for your script
+
 
 %always use Elveflow_Load at the beginning, it loads the DLL
 Elveflow_Load;
@@ -21,7 +22,7 @@ answer='empty_string';%store the user answer in this variable
 %the instrument com port can be determined in windows device explorer and/or
 %NIMAX
 %  ! ! ! TO WORK PROPERLY, FTDI DRIVERS ARE REQUIRED !!! (see User Guide)
-ComPortPtr = libpointer('cstring','ASRL14::INSTR'); 
+ComPortPtr = libpointer('cstring','ASRL11::INSTR'); 
 
 
 %pointer to store the instrument ID (no array)
@@ -30,7 +31,7 @@ Inst_ID=libpointer('int32Ptr',zeros(1,1));
 %initiate the device (see User
 %Guide for help)
 %may return an error if the instrument wasn't closed properly last time
-error= BFS_Initialization(ComPortPtr,Inst_ID);
+error= BFS_Initialization(ComPortPtr,0.001,1,1,Inst_ID);
 CheckError(error);
 error=0;
 disp(strcat('Instrument ID = ', num2str(Inst_ID.Value)));%show the instrument number
@@ -52,30 +53,9 @@ GetValuePtr = libpointer('doublePtr',zeros(1,1));%to store the returned value
 while (~strcmp(answer,'exit')) %loop until user enters exit
     %get user answer 
     answer='non valid answer to avoid looping indefinitely';
-    while (~(strcmp(answer,'get density')||strcmp(answer,'get flow')||strcmp(answer,'get temperature')||strcmp(answer,'set filter')||strcmp(answer,'do zero')||strcmp(answer,'start')||strcmp(answer,'stop')||strcmp(answer,'read channel')||strcmp(answer,'exit')))
-    prompt = '\nChoose what to do: get density, get flow, get temperature, set filter, do zero or exit\n';
+    while (~(strcmp(answer,'get data')||strcmp(answer,'set filter')||strcmp(answer,'do zero')||strcmp(answer,'exit')))
+    prompt = '\nChoose what to do: get data, set filter, do zero or exit\n';
     answer = input(prompt,'s');
-    end
-
-     %get density
-    if strcmp(answer,'get density')
-       error = BFS_Get_Density(Inst_ID.Value,GetValuePtr );
-       CheckError(error);
-       disp(strcat('measured Density: ' , num2str(GetValuePtr.Value)));
-    end
-    
-    %get flow
-    if strcmp(answer,'get flow')
-       error = BFS_Get_Flow(Inst_ID.Value,GetValuePtr );
-       CheckError(error);
-       disp(strcat('measured Flow: ' , num2str(GetValuePtr.Value),'. Remember that density need to be measured at least once before using this function since density is used to measure the flow.\n If measurement frequency is not critical, always measure first density and then flow'));
-    end
-    
-    %get Temperature
-    if strcmp(answer,'get temperature')
-       error = BFS_Get_Temperature(Inst_ID.Value,GetValuePtr );
-       CheckError(error);
-       disp(strcat('measured Temperature: ' , num2str(GetValuePtr.Value)));
     end
     
     %set filter
@@ -89,25 +69,14 @@ while (~strcmp(answer,'exit')) %loop until user enters exit
     %put valves before and after the BFS to stop the flow before performing zeroing
     if strcmp(answer,'do zero')
         disp('Zeroing last approximately 10 sec. Wait for the LED to stop blinking before sending an other command. \nRead corresponding User Guide to perform correctly the zeroing procedure.');
-        error=BFS_Zeroing(Inst_ID.Value);
+        error=BFS_Zero(Inst_ID.Value);
         CheckError(error);
     end
     
-        %start the remote loop
-    if strcmp(answer,'start')
-        error = BFS_Start_Remote_Measurement(Inst_ID.Value);
-        CheckError(error);
-    end
-    
-    %stop the remote loop
-    if strcmp(answer,'stop')
-        error = BFS_Stop_Remote_Measurement(Inst_ID.Value);
-        CheckError(error);
-    end
     
     %read a channel the remote loop
-    if strcmp(answer,'read channel')
-        error = BFS_Get_Remote_Data(Inst_ID.Value, temperature, density, flow_rate);
+    if strcmp(answer,'get data')
+        error = BFS_Get_Data(Inst_ID.Value, flow_rate, temperature, density);
         CheckError(error);
         
         disp(strcat('temperature/density/sensor = ' , num2str(temperature.Value),'; ', num2str(density.Value), '; ', num2str(flow_rate.Value)));

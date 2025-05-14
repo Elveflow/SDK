@@ -1,4 +1,4 @@
-function [error] = OB1_Calib(OB1_ID_in, Calib_array_out, len)
+function [error] = OB1_Calib(OB1_ID_in)
  % Elveflow Library
  % OB1 Device
  % 
@@ -7,7 +7,7 @@ function [error] = OB1_Calib(OB1_ID_in, Calib_array_out, len)
  % caps. 
  % Len correspond to the Calib_array_out length.
  
-error=calllib('Elveflow32', 'OB1_Calib' , OB1_ID_in, Calib_array_out, len);
+error=calllib('Elveflow32', 'OB1_Calib' , OB1_ID_in);
 
 
 end

@@ -7,9 +7,9 @@
 %%%%%%%%%%%%%%%%%
 
 %define here the directory where .m, DLL and this script are 
-addpath('D:\dev\SDK\SDK_V3_06_03\MATLAB_64\MATLAB_64\');%path for MATLAB"***.m" file
-addpath('D:\dev\SDK\SDK_V3_06_03\MATLAB_64\MATLAB_64\DLL64\');%path for the DLL library
-addpath('D:\dev\SDK\SDK_V3_06_03\MATLAB_64\Example\')%path for your script
+addpath('C:\Users\Kevin\Desktop\SDK_V3_10_00\DLL\Matlab\MATLAB_32\MATLAB_32\');%path for MATLAB"***.m" file
+addpath('C:\Users\Kevin\Desktop\SDK_V3_10_00\DLL\Matlab\MATLAB_32\MATLAB_32\DLL32');%path for the DLL library
+addpath('C:\Users\Kevin\Desktop\SDK_V3_10_00\DLL\Matlab\MATLAB_32\Example')%path for your script
 
 %always use Elveflow_Load at the beginning, it loads the DLL
 Elveflow_Load;
@@ -17,16 +17,12 @@ Elveflow_Load;
 error =0;%init error to zero, if an error occurs in the DLL, an error is returned
 answer='empty_string';%store the user answer in this variable
 
-
 %create equivalent of char[] to communicate with the DLL
 %the instrument name can be found in NIMAX
-Instrument_Name = libpointer('cstring','COM5');%COM5 is the COM port of the instrument
+Instrument_Name = libpointer('cstring','COM3');%COM5 is the COM port of the instrument
 %COM port is applicable only for OB1 MK4 devices
 %For OB1 MK3+, use NI 485 serial number found in NI MAX
 
-%create a pointer for calibration
-CalibSize = 1000;
-Calibration = libpointer('doublePtr',zeros(CalibSize,1));
 
 %pointer to store the instrument ID (no array)
 Inst_ID=libpointer('int32Ptr',zeros(1,1));
@@ -58,30 +54,24 @@ Calib_Load = libpointer('cstring',' ');
 
 
 %ask user what kind of calibration to use
-while (~(strcmp(answer,'new')||strcmp(answer,'load')||strcmp(answer,'default')))
-    prompt = 'What kind of calibration do you want to use ?(new, load, default)\n';
+while (~(strcmp(answer,'new')||strcmp(answer,'load')))
+    prompt = 'What kind of calibration do you want to use ?(new, load)\n';
     answer = input(prompt,'s');
 end
 
 if strcmp(answer,'new')%new calibration takes about 2 minutes
     if error==0%avoid new calibration if something happened during the initialization
-        error = OB1_Calib(Inst_ID.Value,Calibration, CalibSize);
+        error = OB1_Calib(Inst_ID.Value);
         %save the calibration for further use
-        error=Elveflow_Calibration_Save( Calib_Save , Calibration, CalibSize);
+        error=OB1_Calib_Save(Inst_ID.Value, Calib_Save );
         CheckError(error);
     end
 end
 
 if strcmp(answer,'load')%load previous calibration
-    error = Elveflow_Calibration_Load( Calib_Load , Calibration, CalibSize);
+    error = OB1_Calib_Load(Inst_ID.Value, Calib_Load );
     CheckError(error);
 end
-
-if strcmp(answer,'default')%use default calibration
-    error = Elveflow_Calibration_Default(Calibration, CalibSize);
-    CheckError(error);
-end
-
 
 %%%%%%%%%%%%%%%%
 % MAIN PART
@@ -107,8 +97,9 @@ while (~strcmp(answer,'exit')) %loop until user enters exit
     
     channel_n=-1; %reset channel_n to -1
     set_pressure=0;
+    set_target=0;
     
-    %get pressure
+    %get data
     if strcmp(answer,'get pressure')
         %select the channel
          while (~(channel_n>0&&channel_n<5))
@@ -116,38 +107,10 @@ while (~strcmp(answer,'exit')) %loop until user enters exit
             channel_n=input(prompt);
         end
         
-        error = OB1_Get_Press(Inst_ID.Value ,channel_n, 1, Calibration, Press_value, CalibSize);
+        error = OB1_Get_Data(Inst_ID.Value ,channel_n, Press_value, flow_rate);
         CheckError(error);
         
-        disp(strcat('pressure ch',num2str(channel_n), ' = ' , num2str(Press_value.Value),' mbar'));
-    end
-    
-    %get flow
-    if strcmp(answer,'get sensor')
-        while (~(channel_n>0&&channel_n<5))
-            prompt = 'select channel (1-4)';
-            channel_n=input(prompt);
-        end
-        error = OB1_Get_Sens_Data(Inst_ID.Value,channel_n, 1,flow_rate); %Acquire data=1 -> acquire the fresh data, if zero, used data in buffer 
-        CheckError(error);
-        disp(strcat( 'sensor data = ',num2str(flow_rate.Value)));
-    end
-    
-    %get all pressure and sensor values
-    if strcmp(answer,'get everything')
-        
-        error = OB1_Get_Press(Inst_ID.Value ,1, 1, Calibration, Press_value, CalibSize);%Acquire data=1 -> refresh the buffer (takes about 2 ms)
-        CheckError(error);
-        disp(strcat('pressure ch',num2str(i), ' = ' , num2str(Press_value.Value),' mbar'));
-        for i = 2:4 %read all the other channels using the value written in buffer by the previous OB1_Get_Press function
-             error = OB1_Get_Press(Inst_ID.Value , i, 0, Calibration, Press_value, CalibSize);%Acquire data=0 -> use data acquired in the buffer (takes about 2 ms)
-             disp(strcat('pressure ch',num2str(i), ' = ' , num2str(Press_value.Value),' mbar'));
-        end
-        
-        for i = 1:4 %read all sensors using the value written in buffer by the previous OB1_Get_Press function. For digital sensor, the value is read by this function
-             error = OB1_Get_Sens_Data(Inst_ID.Value ,i, 0, flow_rate);%Acquire data=0 -> use data acquired in the buffer (takes about 2 ms)
-             disp(strcat('sens ch',num2str(i), ' = ' , num2str(flow_rate.Value),'µL/min or mbar'));
-        end
+        disp(strcat('pressure ch',num2str(channel_n), ' = ' , num2str(Press_value.Value),' mbar','sensor data = ',num2str(flow_rate.Value)));
     end
     
     %set pressure
@@ -158,10 +121,22 @@ while (~strcmp(answer,'exit')) %loop until user enters exit
         end
         prompt = 'select pressure (mbar)';
         set_pressure=input(prompt);
-        error = OB1_Set_Press(Inst_ID.Value,channel_n,set_pressure,Calibration,CalibSize);
+        error = OB1_Set_Press(Inst_ID.Value,channel_n,set_pressure);
         CheckError(error);
     end
     
+        %set sensor
+    if strcmp(answer,'set sensor')
+        while (~(channel_n>0&&channel_n<5))
+            prompt = 'select channel (1-4)';
+            channel_n=input(prompt);
+        end
+        prompt = 'select sensor target';
+        set_target=input(prompt);
+        error = OB1_Set_Sens(Inst_ID.Value,channel_n,set_target);
+        CheckError(error);
+    end
+
     
     %get the trigger value
     if strcmp(answer,'get trigger')
@@ -191,46 +166,7 @@ while (~strcmp(answer,'exit')) %loop until user enters exit
         end
        
     end
-    
-    %start the remote loop
-    if strcmp(answer,'start')
-        error = OB1_Start_Remote_Measurement(Inst_ID.Value,Calibration,CalibSize);
-        CheckError(error);
-    end
-    
-    %stop the remote loop
-    if strcmp(answer,'stop')
-        error = OB1_Stop_Remote_Measurement(Inst_ID.Value);
-        CheckError(error);
-    end
-    
-    %set a target in the remote loop
-    if strcmp(answer,'set target')
-        %select the channel
-        while (~(channel_n>0&&channel_n<5))
-            prompt = 'select channel (1-4)';
-            channel_n=input(prompt);
-        end
-        prompt = 'select target (mbar or uL/min)';
-        set_pressure=input(prompt);
-        error = OB1_Set_Remote_Target(Inst_ID.Value,channel_n,set_pressure);
-        CheckError(error);
-    end
-    
-    %read a channel in the remote loop
-    if strcmp(answer,'read channel')
-        %select the channel
-        while (~(channel_n>0&&channel_n<5))
-            prompt = 'select channel (1-4)';
-            channel_n=input(prompt);
-        end
-        
-        error = OB1_Get_Remote_Data(Inst_ID.Value ,channel_n, Press_value, flow_rate);
-        CheckError(error);
-        
-        disp(strcat('regulator/sensor ch',num2str(channel_n), ' = ' , num2str(Press_value.Value),'; ', num2str(flow_rate.Value)));
-    end
-    
+ 
     %add a PID in the remote loop
     if strcmp(answer,'add PID')
         while (~(channel_n>0&&channel_n<5))

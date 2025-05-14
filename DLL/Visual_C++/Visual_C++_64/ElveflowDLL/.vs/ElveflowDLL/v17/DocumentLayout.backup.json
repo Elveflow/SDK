@@ -1,0 +1,62 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Jules Pailler\\Documents\\SDK_V3_10_00\\DLL\\Visual_C\u002B\u002B\\Visual_C\u002B\u002B\\Visual_C\u002B\u002B_64\\ElveflowDLL\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9CD5076E-69AC-41A1-90BA-86D3BC5023AA}|ElveflowDLL.vcxproj|C:\\Users\\Jules Pailler\\Documents\\SDK_V3_10_00\\DLL\\Visual_C\u002B\u002B\\Visual_C\u002B\u002B\\Visual_C\u002B\u002B_64\\ElveflowDLL\\BFS.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{9CD5076E-69AC-41A1-90BA-86D3BC5023AA}|ElveflowDLL.vcxproj|solutionrelative:BFS.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9CD5076E-69AC-41A1-90BA-86D3BC5023AA}|ElveflowDLL.vcxproj|C:\\Users\\Jules Pailler\\Documents\\SDK_V3_10_00\\DLL\\Visual_C\u002B\u002B\\Visual_C\u002B\u002B\\Visual_C\u002B\u002B_64\\ElveflowDLL\\M_S_R_D.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{9CD5076E-69AC-41A1-90BA-86D3BC5023AA}|ElveflowDLL.vcxproj|solutionrelative:M_S_R_D.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BFS.cpp",
+              "DocumentMoniker": "C:\\Users\\Jules Pailler\\Documents\\SDK_V3_10_00\\DLL\\Visual_C\u002B\u002B\\Visual_C\u002B\u002B\\Visual_C\u002B\u002B_64\\ElveflowDLL\\BFS.cpp",
+              "RelativeDocumentMoniker": "BFS.cpp",
+              "ToolTip": "C:\\Users\\Jules Pailler\\Documents\\SDK_V3_10_00\\DLL\\Visual_C\u002B\u002B\\Visual_C\u002B\u002B\\Visual_C\u002B\u002B_64\\ElveflowDLL\\BFS.cpp",
+              "RelativeToolTip": "BFS.cpp",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAADcAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-05-02T12:28:48.213Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "M_S_R_D.cpp",
+              "DocumentMoniker": "C:\\Users\\Jules Pailler\\Documents\\SDK_V3_10_00\\DLL\\Visual_C\u002B\u002B\\Visual_C\u002B\u002B\\Visual_C\u002B\u002B_64\\ElveflowDLL\\M_S_R_D.cpp",
+              "RelativeDocumentMoniker": "M_S_R_D.cpp",
+              "ToolTip": "C:\\Users\\Jules Pailler\\Documents\\SDK_V3_10_00\\DLL\\Visual_C\u002B\u002B\\Visual_C\u002B\u002B\\Visual_C\u002B\u002B_64\\ElveflowDLL\\M_S_R_D.cpp",
+              "RelativeToolTip": "M_S_R_D.cpp",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAAEAAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-05-02T12:24:31.347Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

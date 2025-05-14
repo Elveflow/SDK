@@ -1,4 +1,4 @@
-function [error] = M_S_R_D_Add_Sens(M_S_R_D_ID, Channel_1_to_4, SensorType, DigitalAnalog, FSens_Digit_Calib, FSens_Digit_Resolution)
+function [error] = M_S_R_D_Add_Sens(M_S_R_D_ID, Channel_1_to_4, SensorType, DigitalAnalog, FSens_Digit_Calib, FSens_Digit_Resolution, Custom_Sensor_VoltageIn525VOptional)
  % Elveflow Library
  % MSRD Device
  % 
@@ -20,7 +20,7 @@ function [error] = M_S_R_D_Add_Sens(M_S_R_D_ID, Channel_1_to_4, SensorType, Digi
  % 
  % NB: Sensor type has to be the same as in the "Initialization" step.
  
-error=calllib('Elveflow32', 'M_S_R_D_Add_Sens' , M_S_R_D_ID, Channel_1_to_4, SensorType, DigitalAnalog, FSens_Digit_Calib, FSens_Digit_Resolution);
+error=calllib('Elveflow32', 'M_S_R_D_Add_Sens' , M_S_R_D_ID, Channel_1_to_4, SensorType, DigitalAnalog, FSens_Digit_Calib, FSens_Digit_Resolution, Custom_Sensor_VoltageIn525VOptional);
 
 
 end

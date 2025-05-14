@@ -1,4 +1,4 @@
-function [error, Answer] = MUX_DRI_Send_Command(MUX_DRI_ID_in, Action, Answer, len)
+function [error, Answer] = MUX_DRI_Send_Command(MUX_DRI_ID_in, Action, Answer, longueur)
  % Elveflow Library
  % MUX D-R-I Device
  % 
@@ -10,7 +10,7 @@ function [error, Answer] = MUX_DRI_Send_Command(MUX_DRI_ID_in, Action, Answer, l
  % Home the valve is necessary as an initialization step before using the 
  % valve for a session.
  
-[error, Answer] =calllib('Elveflow32', 'MUX_DRI_Send_Command' , MUX_DRI_ID_in, Action, Answer, len);
+[error, Answer] =calllib('Elveflow32', 'MUX_DRI_Send_Command' , MUX_DRI_ID_in, Action, Answer, longueur);
 
 
 end

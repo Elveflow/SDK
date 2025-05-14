@@ -1,4 +1,4 @@
-function [error] = MUX_Wire_Set_all_valves(MUX_ID_in, array_valve_in, len)
+function [error] = MUX_Wire_Set_all_valves(MUX_ID_in, array_valve_in, longueur)
  % Elveflow Library
  % Mux Device
  % 
@@ -7,7 +7,7 @@ function [error] = MUX_Wire_Set_all_valves(MUX_ID_in, array_valve_in, len)
  % array does not contain exactly 16 element nothing happened
  % 
  
-error=calllib('Elveflow32', 'MUX_Wire_Set_all_valves' , MUX_ID_in, array_valve_in, len);
+error=calllib('Elveflow32', 'MUX_Wire_Set_all_valves' , MUX_ID_in, array_valve_in, longueur);
 
 
 end

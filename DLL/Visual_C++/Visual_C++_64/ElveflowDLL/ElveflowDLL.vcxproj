@@ -22,7 +22,7 @@
     <ProjectGuid>{9CD5076E-69AC-41A1-90BA-86D3BC5023AA}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>ElveflowDLL</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -103,7 +103,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Kevin\Downloads\ESI and SDK\SDK\DLL64\Example_DLL64_Visual_Cpp\ElveflowDLL\dll;D:\dev\SDK\DLL64\Example_DLL64_Visual_Cpp\ElveflowDLL\dll;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Kevin\Downloads\ESI and SDK\SDK\DLL64\Example_DLL64_Visual_Cpp\ElveflowDLL\dll;D:\dev\SDK\DLL64\Example_DLL64_Visual_Cpp\ElveflowDLL\dll;C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_64\ElveflowDLL\dll;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

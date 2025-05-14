@@ -1,0 +1,101 @@
+﻿  stdafx.cpp
+  main.cpp
+  MUX.cpp
+  MUX_DRI.cpp
+  OB1.cpp
+  error_check.cpp
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\OB1.cpp(57,23): error C2065: 'Calibration' : identificateur non déclaré
+  (compiler le fichier source '/OB1.cpp')
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\OB1.cpp(58,41): error C2065: 'Calibration' : identificateur non déclaré
+  (compiler le fichier source '/OB1.cpp')
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\OB1.cpp(58,11): error C3861: 'Elveflow_Calibration_Save' : identificateur introuvable
+  (compiler le fichier source '/OB1.cpp')
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\OB1.cpp(95,31): error C2062: type 'double' inattendu
+  (compiler le fichier source '/OB1.cpp')
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\OB1.cpp(120,4): error C3861: 'OB1_Get_Sens_Data' : identificateur introuvable
+  (compiler le fichier source '/OB1.cpp')
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\OB1.cpp(162,50): error C2065: 'Calibration' : identificateur non déclaré
+  (compiler le fichier source '/OB1.cpp')
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\OB1.cpp(162,4): error C3861: 'OB1_Set_All_Press' : identificateur introuvable
+  (compiler le fichier source '/OB1.cpp')
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\OB1.cpp(169,40): error C2065: 'Calibration' : identificateur non déclaré
+  (compiler le fichier source '/OB1.cpp')
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\OB1.cpp(169,4): error C3861: 'OB1_Get_Press' : identificateur introuvable
+  (compiler le fichier source '/OB1.cpp')
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\OB1.cpp(173,41): error C2065: 'Calibration' : identificateur non déclaré
+  (compiler le fichier source '/OB1.cpp')
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\OB1.cpp(173,5): error C3861: 'OB1_Get_Press' : identificateur introuvable
+  (compiler le fichier source '/OB1.cpp')
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\OB1.cpp(178,5): error C3861: 'OB1_Get_Sens_Data' : identificateur introuvable
+  (compiler le fichier source '/OB1.cpp')
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\OB1.cpp(191,35): error C2065: 'Calibration' : identificateur non déclaré
+  (compiler le fichier source '/OB1.cpp')
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\OB1.cpp(193,36): error C2065: 'Calibration' : identificateur non déclaré
+  (compiler le fichier source '/OB1.cpp')
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\OB1.cpp(198,35): error C2065: 'Calibration' : identificateur non déclaré
+  (compiler le fichier source '/OB1.cpp')
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\OB1.cpp(198,5): error C3861: 'OB1_Get_Press' : identificateur introuvable
+  (compiler le fichier source '/OB1.cpp')
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\OB1.cpp(242,42): error C2065: 'Calibration' : identificateur non déclaré
+  (compiler le fichier source '/OB1.cpp')
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\OB1.cpp(242,4): error C3861: 'OB1_Start_Remote_Measurement' : identificateur introuvable
+  (compiler le fichier source '/OB1.cpp')
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\OB1.cpp(247,4): error C3861: 'OB1_Stop_Remote_Measurement' : identificateur introuvable
+  (compiler le fichier source '/OB1.cpp')
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\OB1.cpp(255,4): error C3861: 'OB1_Get_Remote_Data' : identificateur introuvable
+  (compiler le fichier source '/OB1.cpp')
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\OB1.cpp(268,4): error C3861: 'OB1_Set_Remote_Target' : identificateur introuvable
+  (compiler le fichier source '/OB1.cpp')
+  
+  BFS.cpp
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\BFS.cpp(24,10): error C2660: 'BFS_Initialization' : la fonction ne prend pas 2 arguments
+  (compiler le fichier source '/BFS.cpp')
+      C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\dll\Elveflow32.h(256,17):
+      voir la déclaration de 'BFS_Initialization'
+      C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\BFS.cpp(24,10):
+      lors de la tentative de mise en correspondance de la liste des arguments '(const char [14], int *)'
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\BFS.cpp(45,4): error C3861: 'BFS_Get_Density' : identificateur introuvable
+  (compiler le fichier source '/BFS.cpp')
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\BFS.cpp(51,4): error C3861: 'BFS_Get_Flow' : identificateur introuvable
+  (compiler le fichier source '/BFS.cpp')
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\BFS.cpp(58,4): error C3861: 'BFS_Get_Temperature' : identificateur introuvable
+  (compiler le fichier source '/BFS.cpp')
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\BFS.cpp(74,4): error C3861: 'BFS_Zeroing' : identificateur introuvable
+  (compiler le fichier source '/BFS.cpp')
+  
+  M_S_R_D.cpp
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\M_S_R_D.cpp(31,10): error C2660: 'M_S_R_D_Add_Sens' : la fonction ne prend pas 6 arguments
+  (compiler le fichier source '/M_S_R_D.cpp')
+      C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\dll\Elveflow32.h(347,17):
+      voir la déclaration de 'M_S_R_D_Add_Sens'
+      C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\M_S_R_D.cpp(31,10):
+      lors de la tentative de mise en correspondance de la liste des arguments '(int, int, int, int, int, int)'
+  
+C:\Users\Jules Pailler\Documents\SDK_V3_10_00\DLL\Visual_C++\Visual_C++\Visual_C++_32\ElveflowDLL\M_S_R_D.cpp(52,12): error C3861: 'M_S_R_D_Get_Sens_Data' : identificateur introuvable
+  (compiler le fichier source '/M_S_R_D.cpp')
+  
+  Génération de code en cours...
